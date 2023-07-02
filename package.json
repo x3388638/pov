@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server"
+    "dev": "NODE_ENV=development webpack-dev-server",
+    "lint": "eslint './**/*.js' && echo \"✅ Lint passed\"",
+    "lint:fix": "eslint './**/*.js' --fix",
+    "prettier:check": "prettier --check './**/*.{js,json,css}'",
+    "prettier:write": "prettier --write './**/*.{js,json,css}'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -27,6 +32,8 @@
     "eslint-plugin-react": "^7.32.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "prettier": "2.8.8",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
@@ -35,5 +42,13 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "lint-staged": {
+    "*.{js,json,css}": [
+      "npm run prettier:check"
+    ],
+    "*.js": [
+      "npm run lint"
+    ]
   }
 }
