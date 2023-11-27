@@ -2,6 +2,8 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 
+import 'reset-css'
+
 import Home from './pages/home'
 import Photo from './pages/p'
 import Video from './pages/v'

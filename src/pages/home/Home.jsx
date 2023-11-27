@@ -1,15 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
+import Cover from './Cover'
 
 const Home = () => {
   return (
-    <div
-      css={{
-        color: 'red',
-        fontSize: '60px',
-      }}
-    >
-      homeee
+    <div>
+      <Cover />
+      <div>photo</div>
+      <div>video</div>
+      <div>map</div>
     </div>
   )
 }

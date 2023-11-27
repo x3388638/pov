@@ -28,6 +28,10 @@ module.exports = {
         },
       },
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
@@ -40,8 +44,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public/index.html'),
-      // favicon: path.resolve(__dirname, 'static/favicon.ico')
+      template: path.resolve(__dirname, 'index.html'),
+      favicon: path.resolve(__dirname, 'static/images/favicon.ico'),
     }),
     // new CopyPlugin({
     //   patterns: [
