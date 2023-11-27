@@ -1,6 +1,6 @@
-import { faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faYoutube, IconDefinition } from '@fortawesome/free-brands-svg-icons'
 
-export const SOCIAL_MEDIA_LIST = [
+export const SOCIAL_MEDIA_LIST: { icon: IconDefinition, label: string, link: string }[] = [
   {
     icon: faInstagram,
     label: 'yy.garage___',
