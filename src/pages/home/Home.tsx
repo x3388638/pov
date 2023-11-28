@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react'
+import { FC } from 'react'
 import Cover from './Cover'
 
-const Home = () => {
+const Home: FC = () => {
   return (
     <div>
       <Cover />

@@ -1,4 +1,3 @@
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 
@@ -10,7 +9,7 @@ import Video from './pages/v'
 import YoutubeRedirect from './pages/y'
 
 const container = document.getElementById('app')
-const root = createRoot(container)
+const root = createRoot(container!)
 
 const router = createHashRouter([
   {

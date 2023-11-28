@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "target": "es6",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -8,7 +9,11 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@static/*": ["./static/*"]
+    }
   },
   "include": ["./**/*.ts", "./**/*.tsx"]
 }

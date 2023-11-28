@@ -1,10 +1,10 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react'
+import { FC } from 'react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import coverImg from '../../../static/images/cover.jpg'
-import { SOCIAL_MEDIA_LIST } from './constants'
+import coverImg from '@static/images/cover.jpg'
+import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from './constants'
+
 
 const CoverBackground = styled.div`
   height: 100%;
@@ -38,7 +38,7 @@ const HashTag = styled.span`
   }
 `
 
-const SocialMediaLink = ({ icon, label, link }) => {
+const SocialMediaLink = ({ icon, label, link }: SocialMediaInfo) => {
   return (
     <a
       href={link}
@@ -51,7 +51,7 @@ const SocialMediaLink = ({ icon, label, link }) => {
   )
 }
 
-const Cover = () => {
+const Cover: FC = () => {
   return (
     <div
       css={{
