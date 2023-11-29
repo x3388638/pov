@@ -6,8 +6,6 @@ import MoreBtn from './MoreBtn'
 
 const Carousel = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
   width: 100%;
   overflow: auto;
   gap: 8px;
@@ -63,7 +61,7 @@ const PhotoSection: FC = () => {
         {/* FIXME: get img list */}
         {MOCK_PINNED_PHOTO_LIST.map((src, i) => (
           <ImgContainer key={i} onClick={handleClickImg}>
-            <img src={src} />
+            <img src={src} height="100%" />
           </ImgContainer>
         ))}
       </Carousel>
