@@ -15,7 +15,17 @@ export const SOCIAL_MEDIA_LIST: SocialMediaInfo[] = [
   },
 ]
 
-// FIXME
+// TODO: random items from storage (github actions -> video list static file)
+export const FEATURED_YT_LIST = [
+  'ray8ENHPdXU', // 74
+  'mKIO7a8ClRE', // scala
+  'Ear9ciGATL8', // exterior
+  'XLf-og0dMhg', // penghu ferry
+  'IKyWwiaotfs', // Tianyuan Temple
+  'P_tBP3qRRwA', // lalaport
+]
+
+// FIXME: random items from storage (contentful -> github actions -> static file)
 export const MOCK_PINNED_PHOTO_LIST = [
   'https://fakeimg.pl/1200x900/',
   'https://fakeimg.pl/900x1200/',
