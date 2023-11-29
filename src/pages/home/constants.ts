@@ -14,3 +14,17 @@ export const SOCIAL_MEDIA_LIST: SocialMediaInfo[] = [
     link: 'https://www.youtube.com/@POVDriveTaiwan',
   },
 ]
+
+// FIXME
+export const MOCK_PINNED_PHOTO_LIST = [
+  'https://fakeimg.pl/1200x900/',
+  'https://fakeimg.pl/900x1200/',
+  'https://fakeimg.pl/1200x1500/',
+  'https://fakeimg.pl/1200x900/',
+  'https://fakeimg.pl/900x1200/',
+  'https://fakeimg.pl/1200x1500/',
+  'https://fakeimg.pl/1200x900/',
+  'https://fakeimg.pl/900x1200/',
+  'https://fakeimg.pl/1200x1500/',
+  'https://fakeimg.pl/1200x1500/',
+]

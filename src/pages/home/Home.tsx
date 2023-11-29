@@ -1,11 +1,13 @@
 import { FC } from 'react'
+
 import Cover from './Cover'
+import PhotoSection from './PhotoSection'
 
 const Home: FC = () => {
   return (
     <div>
       <Cover />
-      <div>photo</div>
+      <PhotoSection />
       <div>video</div>
       <div>map</div>
     </div>

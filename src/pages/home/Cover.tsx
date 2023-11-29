@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import coverImg from '@static/images/cover.jpg'
 import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from './constants'
 
-
 const CoverBackground = styled.div`
   height: 100%;
   width: 100%;
@@ -26,7 +25,7 @@ const CoverContainer = styled.div`
   gap: 18px;
   min-height: 300px;
   box-sizing: border-box;
-  padding: 15vh 50px 20px;
+  padding: 140px 50px 20px;
   text-align: center;
   color: #fff;
   filter: drop-shadow(0px 0px 5px black);
