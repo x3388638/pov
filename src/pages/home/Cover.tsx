@@ -29,6 +29,10 @@ const CoverContainer = styled.div`
   text-align: center;
   color: #fff;
   filter: drop-shadow(0px 0px 5px black);
+
+  @media screen and (max-width: 480px) {
+    padding: 100px 20px 60px;
+  }
 `
 
 const HashTag = styled.span`
@@ -59,7 +63,13 @@ const Cover: FC = () => {
     >
       <CoverBackground />
       <CoverContainer>
-        <h1 css={{ fontSize: '36px', fontWeight: 'bold' }}>
+        <h1
+          css={{
+            fontSize: '36px',
+            fontWeight: 'bold',
+            '@media screen and (max-width: 480px)': { fontSize: '34px' },
+          }}
+        >
           <span css={{ whiteSpace: 'nowrap' }}>Car Photography /</span>{' '}
           <span css={{ whiteSpace: 'nowrap' }}>POV Driving Video</span>
         </h1>
