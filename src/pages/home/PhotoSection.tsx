@@ -26,8 +26,8 @@ const Carousel = styled.div`
 
 const ImgContainer = styled.div`
   display: inline-flex;
-  height: 250px;
-  max-height: 70vh;
+  height: 40vh;
+  max-height: calc(100vw / 16 * 9);
   transition: all 0.2s cubic-bezier(0, 0, 0.2, 1) 0s;
   cursor: pointer;
 

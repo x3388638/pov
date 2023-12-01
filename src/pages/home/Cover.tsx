@@ -29,6 +29,7 @@ const CoverContainer = styled.div`
   text-align: center;
   color: #fff;
   filter: drop-shadow(0px 0px 5px black);
+  overflow: hidden;
 
   @media screen and (max-width: 480px) {
     padding: 100px 20px 60px;
@@ -47,9 +48,24 @@ const SocialMediaLink = ({ icon, label, link }: SocialMediaInfo) => {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      css={{ color: '#fff' }}
+      css={{ color: '#fff', textDecoration: 'none' }}
     >
-      <FontAwesomeIcon icon={icon} /> {label}
+      <div
+        css={{
+          background: '#ffffff33',
+          padding: '8px 16px',
+          borderRadius: '20px',
+          whiteSpace: 'nowrap',
+          transition: 'all 0.2s cubic-bezier(0, 0, 0.2, 1) 0s',
+          ':hover': {
+            borderRadius: '8px',
+            background: '#ffffff51',
+          },
+        }}
+      >
+        <FontAwesomeIcon icon={icon} />
+        <span css={{ paddingLeft: '8px' }}>{label}</span>
+      </div>
     </a>
   )
 }
