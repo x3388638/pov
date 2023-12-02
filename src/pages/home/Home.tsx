@@ -3,6 +3,7 @@ import { FC } from 'react'
 import Cover from './Cover'
 import PhotoSection from './PhotoSection'
 import VideoSection from './VideoSection'
+import MapSection from './MapSection'
 
 const Home: FC = () => {
   return (
@@ -10,7 +11,7 @@ const Home: FC = () => {
       <Cover />
       <PhotoSection />
       <VideoSection />
-      <div>map</div>
+      <MapSection />
     </div>
   )
 }
