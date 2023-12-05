@@ -42,6 +42,19 @@ const HashTag = styled.span`
   }
 `
 
+const SocialMediaContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  fontsize: 16px;
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    padding: 0 40px;
+  }
+`
+
 const SocialMediaLink = ({ icon, label, link }: SocialMediaInfo) => {
   return (
     <a
@@ -104,19 +117,11 @@ const Cover: FC = () => {
           <HashTag>第一人稱開車視角</HashTag>
           <HashTag>公路美景</HashTag>
         </h2>
-        <div
-          css={{
-            display: 'flex',
-            gap: '8px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            fontSize: '16px',
-          }}
-        >
+        <SocialMediaContainer>
           {SOCIAL_MEDIA_LIST.map((info, i) => {
             return <SocialMediaLink key={i} {...info} />
           })}
-        </div>
+        </SocialMediaContainer>
       </CoverContainer>
     </div>
   )

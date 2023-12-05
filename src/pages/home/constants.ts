@@ -1,4 +1,4 @@
-import { faInstagram, faYoutube, IconDefinition } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faYoutube, faGoogle, IconDefinition } from '@fortawesome/free-brands-svg-icons'
 
 export type SocialMediaInfo = { icon: IconDefinition, label: string, link: string }
 
@@ -13,6 +13,11 @@ export const SOCIAL_MEDIA_LIST: SocialMediaInfo[] = [
     label: '@POVDriveTaiwan',
     link: 'https://www.youtube.com/@POVDriveTaiwan',
   },
+  {
+    icon: faGoogle,
+    label: 'Reviews on Maps',
+    link: 'https://map.pov.tw',
+  }
 ]
 
 // TODO: random items from storage (github actions -> video list static file)

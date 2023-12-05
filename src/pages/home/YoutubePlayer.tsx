@@ -53,6 +53,8 @@ const YoutubePlayer: FC<YoutubePlayerProps> = ({ id }) => {
         onReady: (e: any) => {
           // youtube iframe on mobile w/o muted cannot be autoplay
           // ref: https://developers.google.com/youtube/iframe_api_reference#Mobile_considerations
+
+          // Video unavailable issue: https://blog.maki0419.com/2022/09/youtube-iframe-embed-Video-unavailable-Watch-on-YouTube.html
           e.target.mute()
           e.target.playVideo()
         },
