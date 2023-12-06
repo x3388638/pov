@@ -8,6 +8,7 @@ import Home from './pages/home'
 import Photo from './pages/p'
 import Video from './pages/v'
 import YoutubeRedirect from './pages/y'
+import AppContextProvider from './Providers/AppContextProvider'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)
@@ -40,4 +41,8 @@ const router = createHashRouter([
   },
 ])
 
-root.render(<RouterProvider router={router} />)
+root.render(
+  <AppContextProvider>
+    <RouterProvider router={router} />
+  </AppContextProvider>
+)

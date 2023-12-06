@@ -1,6 +1,7 @@
 import { Asset, Entry, EntryCollection } from 'contentful'
 
 import {
+  ContentfulEntryList,
   Location,
   LocationData,
   LocationEntrySkeleton,
@@ -10,14 +11,7 @@ import {
 } from '@/interfaces'
 
 export const normalizeEntryList = (
-  data: EntryCollection<
-    | LocationEntrySkeleton
-    | TagEntrySkeleton
-    | PhotoEntrySkeleton
-    | VideoEntrySkeleton,
-    undefined,
-    string
-  >
+  data: ContentfulEntryList
 ): LocationData[] => {
   const {
     locationPhotoListMap,

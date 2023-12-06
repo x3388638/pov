@@ -1,4 +1,4 @@
-import { EntryFieldTypes } from 'contentful'
+import { EntryCollection, EntryFieldTypes } from 'contentful'
 
 export interface Location {
   id: string
@@ -69,3 +69,12 @@ export interface VideoEntrySkeleton {
     tags: Array<EntryFieldTypes.EntryLink<TagEntrySkeleton>>
   }
 }
+
+export type ContentfulEntryList = EntryCollection<
+  | LocationEntrySkeleton
+  | TagEntrySkeleton
+  | PhotoEntrySkeleton
+  | VideoEntrySkeleton,
+  undefined,
+  string
+>
