@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
-// const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -40,16 +40,15 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
-      favicon: path.resolve(__dirname, 'static/images/favicon.ico'),
+      favicon: path.resolve(__dirname, 'favicon.ico'),
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: path.resolve(__dirname, 'public/*'),
-    //       flatten: true
-    //     }
-    //   ]
-    // })
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'static'),
+        },
+      ],
+    }),
   ],
   resolve: {
     plugins: [new TsconfigPathsPlugin()],

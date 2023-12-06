@@ -1,6 +1,6 @@
 @font-face {
   font-family: huninn;
-  src: url('../static/fonts/huninn.ttf') format('truetype');
+  src: url('./assets/fonts/huninn.ttf') format('truetype');
 }
 
 html {

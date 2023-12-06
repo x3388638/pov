@@ -11,8 +11,7 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "paths": {
-      "@/*": ["./src/*"],
-      "@static/*": ["./static/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx"]

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import coverImg from '@static/images/cover.jpg'
+import coverImg from '@/assets/images/cover.jpg'
 import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from './constants'
 
 const CoverBackground = styled.div`
