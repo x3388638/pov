@@ -10,6 +10,7 @@ react: v18
 webpack: v5  
 react-router: v6  
 emotion: v11
+leaflet: v1.9
 
 services:  
 contentful  
