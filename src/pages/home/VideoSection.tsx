@@ -9,7 +9,7 @@ import MoreBtn from './MoreBtn'
 const Container = styled.div`
   position: relative;
   background: #f3f3f3;
-  padding: 40px 0;
+  padding: 10px 0;
 
   @media screen and (max-width: 480px) {
     padding: 0;

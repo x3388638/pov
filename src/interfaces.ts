@@ -8,25 +8,29 @@ export interface Location {
   desc?: string
 }
 
+export interface Photo {
+  id: string
+  image: string // url
+  location: [number, number] // lat, lng
+  date: string // YYYY-MM-DD
+  pinned: boolean
+  tags: string[]
+}
+
+export interface Video {
+  id: string
+  date: string // YYYY-MM-DD
+  location: [number, number] // lat, lng
+  youtubeId: string
+  redirectId: number
+  pinned: boolean
+  tags: string[]
+}
+
 export interface LocationData {
   location: Location
-  photoList: {
-    id: string
-    image: string // url
-    location: [number, number] // lat, lng
-    date: string // YYYY-MM-DD
-    pinned: boolean
-    tags: string[]
-  }[]
-  videoList: {
-    id: string
-    date: string // YYYY-MM-DD
-    location: [number, number] // lat, lng
-    youtubeId: string
-    redirectId: number
-    pinned: boolean
-    tags: string[]
-  }[]
+  photoList: Photo[]
+  videoList: Video[]
 }
 
 export interface LocationEntrySkeleton {

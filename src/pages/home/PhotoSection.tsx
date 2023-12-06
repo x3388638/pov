@@ -1,7 +1,11 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import shuffle from 'lodash.shuffle'
 
-import { MOCK_PINNED_PHOTO_LIST } from './constants'
+import { LocationData, Photo } from '@/interfaces'
+import { useAppContext } from '@/providers/AppContextProvider'
+import Loading from '@/components/Loading'
+import { PHOTO_SECTION_ITEM_COUNT } from './constants'
 import MoreBtn from './MoreBtn'
 
 const Carousel = styled.div`
@@ -46,7 +50,49 @@ const ImgContainer = styled.div`
   }
 `
 
+const PlaceHolder = styled.div`
+  position: relative;
+  height: 100%;
+  width: 600px;
+  max-width: 80vw;
+  background: #f3f3f3;
+`
+
 const PhotoSection: FC = () => {
+  const { locationList } = useAppContext()
+  const [photoList, setPhotoList] = useState<Photo[]>(
+    [...Array(PHOTO_SECTION_ITEM_COUNT)].map(() => ({} as Photo))
+  )
+
+  useEffect(() => {
+    setupPhotoList(locationList)
+  }, [locationList])
+
+  const setupPhotoList = (locationList: LocationData[]) => {
+    const pinned: Photo[] = []
+    const nonPinned: Photo[] = []
+    const result: Photo[] = []
+
+    locationList.forEach(({ photoList }) => {
+      ;(photoList || []).forEach((photo) => {
+        if (photo.pinned) {
+          pinned.push(photo)
+        } else {
+          nonPinned.push(photo)
+        }
+      })
+    })
+
+    result.push(...shuffle(pinned).slice(0, PHOTO_SECTION_ITEM_COUNT))
+    if (result.length < PHOTO_SECTION_ITEM_COUNT) {
+      result.push(
+        ...shuffle(nonPinned).slice(0, PHOTO_SECTION_ITEM_COUNT - result.length)
+      )
+    }
+
+    setPhotoList(result)
+  }
+
   const handleClickImg = () => {
     console.log('TODO')
   }
@@ -58,10 +104,17 @@ const PhotoSection: FC = () => {
   return (
     <div css={{ position: 'relative' }}>
       <Carousel>
-        {/* FIXME: get img list */}
-        {MOCK_PINNED_PHOTO_LIST.map((src, i) => (
+        {photoList.map(({ id, image }, i) => (
           <ImgContainer key={i} onClick={handleClickImg}>
-            <img src={src} height="100%" />
+            {id != undefined ? (
+              // TODO: lazy load
+              <img src={image} height="100%" />
+            ) : (
+              // TODO: location name overlap
+              <PlaceHolder>
+                <Loading />
+              </PlaceHolder>
+            )}
           </ImgContainer>
         ))}
       </Carousel>

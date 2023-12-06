@@ -57,6 +57,7 @@ const Container = styled.div<{ animationDelay: number }>`
   @media screen and (max-width: 480px) {
     position: relative;
     width: 100%;
+    padding: 8px 50px;
     justify-content: center;
     box-sizing: border-box;
     box-shadow: unset;

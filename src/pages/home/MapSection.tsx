@@ -4,7 +4,7 @@ import { GestureHandling } from 'leaflet-gesture-handling'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
-import { useAppContext } from '@/Providers/AppContextProvider'
+import { useAppContext } from '@/providers/AppContextProvider'
 
 L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling)
 
