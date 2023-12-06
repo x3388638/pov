@@ -74,7 +74,7 @@ const PhotoSection: FC = () => {
     const result: Photo[] = []
 
     locationList.forEach(({ photoList }) => {
-      ;(photoList || []).forEach((photo) => {
+      photoList?.forEach((photo) => {
         if (photo.pinned) {
           pinned.push(photo)
         } else {
@@ -105,12 +105,12 @@ const PhotoSection: FC = () => {
     <div css={{ position: 'relative' }}>
       <Carousel>
         {photoList.map(({ id, image }, i) => (
+          // FIXME: handle no image
           <ImgContainer key={i} onClick={handleClickImg}>
             {id != undefined ? (
               // TODO: lazy load
-              <img src={image} height="100%" />
+              <img src={image} height="100%" loading="lazy" alt="" />
             ) : (
-              // TODO: location name overlap
               <PlaceHolder>
                 <Loading />
               </PlaceHolder>

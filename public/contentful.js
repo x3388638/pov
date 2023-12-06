@@ -1,4 +1,3 @@
-const contentful = require('contentful')
 const fs = require('fs')
 const path = require('path')
 
@@ -13,13 +12,10 @@ const exec = (space, accessToken) => {
     return
   }
 
-  const client = contentful.createClient({
-    space: SPACE_ID,
-    accessToken: ACCESS_TOKEN,
-  })
-
-  client
-    .getEntries()
+  fetch(
+    `https://cdn.contentful.com/spaces/${space}/environments/master/entries?access_token=${accessToken}`
+  )
+    .then((res) => res.json())
     .then((res) => {
       fs.writeFileSync(path.resolve(__dirname, FILE_NAME), JSON.stringify(res))
       console.log(`Contentful data updated in ${FILE_NAME}`)
