@@ -8,6 +8,7 @@ import {
 } from 'react'
 
 import { LocationData } from '@/interfaces'
+import { normalizeEntryList } from '@/utils/contentful'
 
 interface AppContext {
   locationList: LocationData[]
@@ -28,7 +29,7 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
     fetch('/contentfulEntries.json', {})
       .then((res) => res.json())
       .then((data) => {
-        setLocationList(data)
+        setLocationList(normalizeEntryList(data))
       })
   }, [])
 

@@ -45,7 +45,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'static'),
+          from: path.resolve(__dirname, 'public'),
         },
       ],
     }),

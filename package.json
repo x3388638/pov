@@ -10,7 +10,8 @@
     "lint:fix": "eslint './**/*.js' --fix",
     "prettier:check": "prettier --check './**/*.{js,json,css}'",
     "prettier:write": "prettier --write './**/*.{js,json,css}'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "contentful:fetch": "node ./public/contentful.js"
   },
   "repository": {
     "type": "git",
