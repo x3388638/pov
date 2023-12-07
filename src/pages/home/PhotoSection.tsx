@@ -96,10 +96,10 @@ const PhotoSection: FC = () => {
   )
 
   useEffect(() => {
-    setupPhotoList(locationList)
+    initPhotoList(locationList)
   }, [locationList])
 
-  const setupPhotoList = (locationList: LocationData[]) => {
+  const initPhotoList = (locationList: LocationData[]) => {
     const pinned: Photo[] = []
     const nonPinned: Photo[] = []
     const result: Photo[] = []

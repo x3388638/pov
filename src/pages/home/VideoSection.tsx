@@ -1,8 +1,11 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Carousel from 'react-grid-carousel'
 import styled from '@emotion/styled'
+import shuffle from 'lodash.shuffle'
 
-import { FEATURED_YT_LIST } from './constants'
+import { useAppContext } from '@/providers/AppContextProvider'
+import { LocationData, Video } from '@/interfaces'
+import { VIDEO_SECTION_ITEM_COUNT } from './constants'
 import YoutubePlayer from './YoutubePlayer'
 import MoreBtn from './MoreBtn'
 
@@ -24,6 +27,38 @@ const CarouselContainer = styled.div`
 `
 
 const VideoSection: FC = () => {
+  const { locationList } = useAppContext()
+  const [videoList, setVideoList] = useState<Video[]>([])
+
+  useEffect(() => {
+    initVideoList(locationList)
+  }, [locationList])
+
+  const initVideoList = (locationList: LocationData[]) => {
+    const pinned: Video[] = []
+    const nonPinned: Video[] = []
+    const result: Video[] = []
+
+    locationList.forEach(({ videoList }) => {
+      videoList.forEach((video) => {
+        if (video.pinned) {
+          pinned.push(video)
+        } else {
+          nonPinned.push(video)
+        }
+      })
+    })
+
+    result.push(...shuffle(pinned).slice(0, VIDEO_SECTION_ITEM_COUNT))
+    if (result.length < VIDEO_SECTION_ITEM_COUNT) {
+      result.push(
+        ...shuffle(nonPinned).slice(0, VIDEO_SECTION_ITEM_COUNT - result.length)
+      )
+    }
+
+    setVideoList(result)
+  }
+
   return (
     <Container>
       <CarouselContainer>
@@ -44,8 +79,8 @@ const VideoSection: FC = () => {
             },
           ]}
         >
-          {FEATURED_YT_LIST.map((id) => (
-            <Carousel.Item key={id}>
+          {videoList.map(({ youtubeId }) => (
+            <Carousel.Item key={youtubeId}>
               <div
                 css={{
                   position: 'relative',
@@ -62,7 +97,7 @@ const VideoSection: FC = () => {
                     width: '100%',
                   }}
                 >
-                  <YoutubePlayer id={id} />
+                  <YoutubePlayer id={youtubeId} />
                 </div>
               </div>
             </Carousel.Item>

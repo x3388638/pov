@@ -30,13 +30,4 @@ export const SOCIAL_MEDIA_LIST: SocialMediaInfo[] = [
 ]
 
 export const PHOTO_SECTION_ITEM_COUNT = 10
-
-// TODO: random items from storage (github actions -> video list static file)
-export const FEATURED_YT_LIST = [
-  'ray8ENHPdXU', // 74
-  'mKIO7a8ClRE', // scala
-  'Ear9ciGATL8', // exterior
-  'XLf-og0dMhg', // penghu ferry
-  'IKyWwiaotfs', // Tianyuan Temple
-  'P_tBP3qRRwA', // lalaport
-]
+export const VIDEO_SECTION_ITEM_COUNT = 6
