@@ -15,6 +15,10 @@ export interface Photo {
   date: string // YYYY-MM-DD
   pinned: boolean
   tags: string[]
+  resolution: {
+    height: number
+    width: number
+  }
 }
 
 export interface Video {

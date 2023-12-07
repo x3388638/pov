@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import shuffle from 'lodash.shuffle'
 
@@ -50,13 +50,44 @@ const ImgContainer = styled.div`
   }
 `
 
-const PlaceHolder = styled.div`
-  position: relative;
-  height: 100%;
-  width: 600px;
-  max-width: 80vw;
-  background: #f3f3f3;
-`
+const Image: FC<{ photo: Photo }> = ({ photo }) => {
+  const { image, resolution: { height = 3, width = 4 } = {} } = photo
+  const [showImg, setShowImg] = useState(false)
+  const placeholderRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio > 0) {
+        setShowImg(true)
+        observer.disconnect()
+      }
+    })
+
+    observer.observe(placeholderRef.current!)
+  }, [])
+
+  return (
+    <div
+      ref={placeholderRef}
+      css={{
+        position: 'relative',
+        height: '100%',
+        aspectRatio: `${width}/${height}`,
+        background: '#f3f3f3',
+      }}
+    >
+      {showImg ? (
+        <img
+          src={image}
+          height="100%"
+          css={{ position: 'absolute', top: 0, left: 0 }}
+        />
+      ) : (
+        <Loading />
+      )}
+    </div>
+  )
+}
 
 const PhotoSection: FC = () => {
   const { locationList } = useAppContext()
@@ -75,6 +106,10 @@ const PhotoSection: FC = () => {
 
     locationList.forEach(({ photoList }) => {
       photoList?.forEach((photo) => {
+        if (!photo.image) {
+          return
+        }
+
         if (photo.pinned) {
           pinned.push(photo)
         } else {
@@ -104,17 +139,9 @@ const PhotoSection: FC = () => {
   return (
     <div css={{ position: 'relative' }}>
       <Carousel>
-        {photoList.map(({ id, image }, i) => (
-          // FIXME: handle no image
+        {photoList.map((photo, i) => (
           <ImgContainer key={i} onClick={handleClickImg}>
-            {id != undefined ? (
-              // TODO: lazy load
-              <img src={image} height="100%" loading="lazy" alt="" />
-            ) : (
-              <PlaceHolder>
-                <Loading />
-              </PlaceHolder>
-            )}
+            <Image photo={photo} />
           </ImgContainer>
         ))}
       </Carousel>

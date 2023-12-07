@@ -28,7 +28,8 @@ export const normalizeEntryList = (
 
         return {
           id,
-          image: assetMap[(image as Asset).sys.id],
+          image: assetMap[(image as Asset).sys.id].url,
+          resolution: assetMap[(image as Asset).sys.id].resolution,
           location: [location.lat, location.lng] as [number, number],
           date: date as string,
           pinned: (pinned ?? false) as boolean,
@@ -87,16 +88,19 @@ const groupByContentType = (
       Entry<VideoEntrySkeleton>['fields'] & { id: string }
     >
   } = {}
-  const assetMap: Record<string, string> = {}
+  const assetMap: Record<
+    string,
+    { url: string; resolution: { height: number; width: number } }
+  > = {}
   const locationMap: Record<string, Location> = {}
   const tagMap: Record<string, string> = {}
 
   includes.Asset?.forEach((asset) => {
     const id = asset?.sys?.id
-    const url = asset?.fields?.file?.url
+    const { url, details: { image = {} } = {} } = asset?.fields?.file || {}
 
     if (id && url) {
-      assetMap[id] = url
+      assetMap[id] = { url, resolution: image }
     }
   })
 
