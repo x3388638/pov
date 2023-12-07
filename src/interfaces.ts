@@ -11,7 +11,7 @@ export interface Location {
 export interface Photo {
   id: string
   image: string // url
-  location: [number, number] // lat, lng
+  location: Location
   date: string // YYYY-MM-DD
   pinned: boolean
   tags: string[]
@@ -24,7 +24,7 @@ export interface Photo {
 export interface Video {
   id: string
   date: string // YYYY-MM-DD
-  location: [number, number] // lat, lng
+  location: Location
   youtubeId: string
   redirectId: number
   pinned: boolean

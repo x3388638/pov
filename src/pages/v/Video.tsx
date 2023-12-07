@@ -1,10 +1,7 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
 
 const Video: FC = () => {
-  const { id } = useParams()
-
-  return <div>/v{id ? `/${id}` : null}</div>
+  return <div>video list by location</div>
 }
 
 export default Video

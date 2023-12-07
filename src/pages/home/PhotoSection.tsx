@@ -128,8 +128,15 @@ const PhotoSection: FC = () => {
     setPhotoList(result)
   }
 
-  const handleClickImg = () => {
-    console.log('TODO')
+  const handleClickImg = (photo: Photo) => {
+    const { location, id } = photo || {}
+
+    if (!id) {
+      return
+    }
+
+    // TODO: open modal to wrap the location detail page
+    history.pushState({}, '', `/#/p/${location.id}/${id}`)
   }
 
   const handleClickMore = () => {
@@ -140,7 +147,7 @@ const PhotoSection: FC = () => {
     <div css={{ position: 'relative' }}>
       <Carousel>
         {photoList.map((photo, i) => (
-          <ImgContainer key={i} onClick={handleClickImg}>
+          <ImgContainer key={i} onClick={() => handleClickImg(photo)}>
             <Image photo={photo} />
           </ImgContainer>
         ))}

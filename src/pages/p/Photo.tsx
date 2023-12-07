@@ -1,10 +1,7 @@
 import { FC } from 'react'
-import { useParams } from 'react-router-dom'
 
 const Photo: FC = () => {
-  const { id } = useParams()
-
-  return <div>/p{ id? `/${id}` : null }</div>
+  return <div>photo list by location</div>
 }
 
 export default Photo

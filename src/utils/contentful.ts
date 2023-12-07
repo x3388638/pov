@@ -30,7 +30,7 @@ export const normalizeEntryList = (
           id,
           image: assetMap[(image as Asset).sys.id].url,
           resolution: assetMap[(image as Asset).sys.id].resolution,
-          location: [location.lat, location.lng] as [number, number],
+          location,
           date: date as string,
           pinned: (pinned ?? false) as boolean,
           tags: (tags as unknown as Array<Entry<TagEntrySkeleton>>).map(
@@ -47,7 +47,7 @@ export const normalizeEntryList = (
         return {
           id,
           date: date as string,
-          location: [location.lat, location.lng] as [number, number],
+          location,
           youtubeId: youtubeId as string,
           redirectId: redirectId as number,
           pinned: (pinned ?? false) as boolean,

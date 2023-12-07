@@ -8,6 +8,7 @@ import Photo from './pages/p'
 import Video from './pages/v'
 import YoutubeRedirect from './pages/y'
 import AppContextProvider from './providers/AppContextProvider'
+import LocationDetail from './pages/location'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)
@@ -23,16 +24,16 @@ const router = createHashRouter([
     element: <Photo />,
   },
   {
-    path: '/p/:id',
-    element: <Photo />,
+    path: '/p/:locationId?/:itemId?',
+    element: <LocationDetail type="photo" />,
   },
   {
     path: '/v',
     element: <Video />,
   },
   {
-    path: '/v/:id',
-    element: <Video />,
+    path: '/v/:locationId?/:itemId?',
+    element: <LocationDetail type="video" />,
   },
   {
     path: 'y/:id',
