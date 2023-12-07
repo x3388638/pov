@@ -3,8 +3,18 @@ import L, { Map } from 'leaflet'
 import { GestureHandling } from 'leaflet-gesture-handling'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
+import styled from '@emotion/styled'
 
 import { useAppContext } from '@/providers/AppContextProvider'
+
+const Container = styled.div`
+  padding: 10px 20px;
+  background: #fff;
+
+  @media screen and (max-width: 480px) {
+    padding: 0;
+  }
+`
 
 L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling)
 
@@ -67,9 +77,9 @@ const MapSection: FC = () => {
   }
 
   return (
-    <div css={{ padding: '40px 20px', background: '#fff' }}>
-      <div id="LeafletMapContainer" style={{ height: '70vh', width: '100%' }} />
-    </div>
+    <Container>
+      <div id="LeafletMapContainer" style={{ height: '80vh', width: '100%' }} />
+    </Container>
   )
 }
 

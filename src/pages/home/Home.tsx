@@ -4,6 +4,7 @@ import Cover from './Cover'
 import PhotoSection from './PhotoSection'
 import VideoSection from './VideoSection'
 import MapSection from './MapSection'
+import Footer from './Footer'
 
 const Home: FC = () => {
   return (
@@ -12,6 +13,7 @@ const Home: FC = () => {
       <PhotoSection />
       <VideoSection />
       <MapSection />
+      <Footer />
     </div>
   )
 }
