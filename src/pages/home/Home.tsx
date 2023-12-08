@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import Cover from './Cover'
+import Cover from '@/components/Cover'
 import PhotoSection from './PhotoSection'
 import VideoSection from './VideoSection'
 import MapSection from './MapSection'

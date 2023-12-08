@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import coverImg from '@/assets/images/cover.jpg'
-import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from './constants'
+import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from '../pages/home/constants'
+import { Link } from 'react-router-dom'
 
 const CoverBackground = styled.div`
   height: 100%;
@@ -92,16 +93,20 @@ const Cover: FC = () => {
     >
       <CoverBackground />
       <CoverContainer>
-        <h1
-          css={{
-            fontSize: '36px',
-            fontWeight: 'bold',
-            '@media screen and (max-width: 480px)': { fontSize: '34px' },
-          }}
-        >
-          <span css={{ whiteSpace: 'nowrap' }}>Car Photography /</span>{' '}
-          <span css={{ whiteSpace: 'nowrap' }}>POV Driving Video</span>
-        </h1>
+        <Link to="/">
+          <h1
+            css={{
+              fontSize: '36px',
+              fontWeight: 'bold',
+              color: '#fff',
+              display: 'inline-block',
+              '@media screen and (max-width: 480px)': { fontSize: '34px' },
+            }}
+          >
+            <span css={{ whiteSpace: 'nowrap' }}>Car Photography /</span>{' '}
+            <span css={{ whiteSpace: 'nowrap' }}>POV Driving Video</span>
+          </h1>
+        </Link>
         <h2
           css={{
             display: 'flex',
