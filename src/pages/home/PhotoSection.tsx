@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import shuffle from 'lodash.shuffle'
 
@@ -91,6 +92,7 @@ const Image: FC<{ photo: Photo }> = ({ photo }) => {
 
 const PhotoSection: FC = () => {
   const { locationList } = useAppContext()
+  const navigate = useNavigate()
   const [photoList, setPhotoList] = useState<Photo[]>(
     [...Array(PHOTO_SECTION_ITEM_COUNT)].map(() => ({} as Photo))
   )
@@ -135,8 +137,7 @@ const PhotoSection: FC = () => {
       return
     }
 
-    // TODO: open modal to wrap the location detail page
-    history.pushState({}, '', `/#/p/${location.id}/${id}`)
+    navigate(`/p/${location.id}`, { state: { itemId: id } })
   }
 
   const handleClickMore = () => {

@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -134,7 +134,8 @@ const sortItemDate = (a: any, b: any) =>
   new Date(b.date).valueOf() - new Date(a.date).valueOf()
 
 const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
-  const { locationId, itemId } = useParams()
+  const { locationId } = useParams()
+  const { state: { itemId } = {} } = useLocation()
   const { locationList } = useAppContext()
   const [targetLocation, setTargetLocation] = useState<
     LocationData | undefined | null

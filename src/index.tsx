@@ -24,7 +24,7 @@ const router = createHashRouter([
     element: <Photo />,
   },
   {
-    path: '/p/:locationId?/:itemId?',
+    path: '/p/:locationId',
     element: <LocationDetail type="photo" />,
   },
   {
@@ -32,7 +32,7 @@ const router = createHashRouter([
     element: <Video />,
   },
   {
-    path: '/v/:locationId?/:itemId?',
+    path: '/v/:locationId',
     element: <LocationDetail type="video" />,
   },
   {
