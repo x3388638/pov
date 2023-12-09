@@ -6,7 +6,7 @@ import shuffle from 'lodash.shuffle'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData, Video } from '@/interfaces'
 import { VIDEO_SECTION_ITEM_COUNT } from './constants'
-import YoutubePlayer from './YoutubePlayer'
+import YoutubePlayer from '@/components/YoutubePlayer'
 import MoreBtn from './MoreBtn'
 
 const Container = styled.div`

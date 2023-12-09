@@ -1,11 +1,11 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useEffect } from 'react'
 import L, { Map } from 'leaflet'
-import { GestureHandling } from 'leaflet-gesture-handling'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 import styled from '@emotion/styled'
 
 import { useAppContext } from '@/providers/AppContextProvider'
+import useMap from '@/hooks/useMap'
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -15,8 +15,6 @@ const Container = styled.div`
     padding: 0;
   }
 `
-
-L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling)
 
 // ref: https://github.com/pointhi/leaflet-color-markers
 const makerIcon = new L.Icon({
@@ -41,22 +39,7 @@ const setMaker = (map: Map, lat: number, lng: number) => {
 
 const MapSection: FC = () => {
   const { locationList } = useAppContext()
-  const mapRef = useRef<Map>()
-
-  useEffect(() => {
-    // ref: https://hackmd.io/@c36ICNyhQE6-iTXKxoIocg/BkMEznmXU
-    const map = L.map('LeafletMapContainer', {
-      // @ts-ignore
-      gestureHandling: true,
-    }).setView([23.9714255, 120.9860133], 8)
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map)
-
-    mapRef.current = map
-  }, [])
+  const mapRef = useMap({ eleId: 'LeafletMapContainer' })
 
   useEffect(() => {
     // TODO: reset makers
