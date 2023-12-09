@@ -17,7 +17,7 @@ import { LocationData } from '@/interfaces'
 import Cover from '@/components/Cover'
 import YoutubePlayer from '@/components/YoutubePlayer'
 import Footer from '@/components/Footer'
-import { initMap, setMaker } from '@/utils/leaflet'
+import { initMap, setMarker } from '@/utils/leaflet'
 import Gallery from './Gallery'
 
 const Container = styled.div`
@@ -104,26 +104,34 @@ const ItemListContainer = styled.div`
   }
 `
 
+const ExploreBtnContainer = styled.div`
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+
+  @media screen and (max-width: 480px) {
+    justify-content: center;
+  }
+`
+
 const ExploreBtn = styled.div`
   background: #ff4949;
   color: #fff;
-  font-size: 20px;
   padding: 4px 12px;
-  align-self: flex-end;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   cursor: pointer;
+  justify-content: center;
 
   :hover {
     background: #ff2121;
   }
 
   @media screen and (max-width: 480px) {
-    align-self: unset;
-    justify-content: center;
+    flex: 1;
   }
 `
 
@@ -172,7 +180,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
         viewCenter: [targetLocation.location.lat, targetLocation.location.lng],
       })
 
-      setMaker(
+      setMarker(
         map as Map,
         targetLocation.location.lat,
         targetLocation.location.lng
@@ -180,8 +188,8 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
     }
   }, [targetLocation])
 
-  const navigateToListPage = () => {
-    navigate(`/${type[0]}`)
+  const navigateToPage = (path: string) => () => {
+    navigate(path)
   }
 
   return (
@@ -287,13 +295,22 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
               )}
             </div>
             <MapContainer>
-              <ExploreBtn onClick={navigateToListPage}>
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlassLocation}
-                  color="#fff"
-                />
-                探索其他地點
-              </ExploreBtn>
+              <ExploreBtnContainer>
+                <ExploreBtn onClick={navigateToPage('/p')}>
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlassLocation}
+                    color="#fff"
+                  />
+                  更多照片
+                </ExploreBtn>
+                <ExploreBtn onClick={navigateToPage('/v')}>
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlassLocation}
+                    color="#fff"
+                  />
+                  更多影片
+                </ExploreBtn>
+              </ExploreBtnContainer>
               <div
                 id="LeafletMapContainer"
                 style={{ height: '100%', width: '100%' }}

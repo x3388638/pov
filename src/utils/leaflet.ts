@@ -5,7 +5,7 @@ const DEFAULT_VIEW_CENTER: LatLngTuple = [23.9714255, 120.9860133]
 const DEFAULT_ZOOM = 8
 
 // ref: https://github.com/pointhi/leaflet-color-markers
-const makerIcon = new L.Icon({
+const markerIcon = new L.Icon({
   iconUrl:
     'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl:
@@ -16,7 +16,7 @@ const makerIcon = new L.Icon({
   shadowSize: [41, 41],
 })
 
-export const setMaker = (
+export const setMarker = (
   map: Map,
   lat: number,
   lng: number,
@@ -26,10 +26,12 @@ export const setMaker = (
   }
 ) => {
   const marker = L.marker([lat, lng], {
-    icon: makerIcon,
+    icon: markerIcon,
   }).addTo(map)
 
   popup && marker.bindPopup(popup.content, popup.options || {})
+
+  return marker
 }
 
 export const initMap = (params: {
