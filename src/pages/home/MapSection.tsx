@@ -1,11 +1,9 @@
-import { FC, useEffect } from 'react'
-import L, { Map } from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
+import { FC, useEffect, useRef } from 'react'
+import { Map } from 'leaflet'
 import styled from '@emotion/styled'
 
 import { useAppContext } from '@/providers/AppContextProvider'
-import useMap from '@/hooks/useMap'
+import { initMap, setMaker } from '@/utils/leaflet'
 
 const Container = styled.div`
   padding: 10px 20px;
@@ -16,30 +14,13 @@ const Container = styled.div`
   }
 `
 
-// ref: https://github.com/pointhi/leaflet-color-markers
-const makerIcon = new L.Icon({
-  iconUrl:
-    'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-})
-
-const setMaker = (map: Map, lat: number, lng: number) => {
-  const marker = L.marker([lat, lng], {
-    icon: makerIcon,
-  }).addTo(map)
-
-  // TODO: popup content
-  marker.bindPopup('<b>Hello world!</b><br>I am a popup.')
-}
-
 const MapSection: FC = () => {
   const { locationList } = useAppContext()
-  const mapRef = useMap({ eleId: 'LeafletMapContainer' })
+  const mapRef = useRef<Map>()
+
+  useEffect(() => {
+    mapRef.current = initMap({ eleId: 'LeafletMapContainer' }) as Map
+  }, [])
 
   useEffect(() => {
     // TODO: reset makers
@@ -52,7 +33,7 @@ const MapSection: FC = () => {
     if (mapRef.current) {
       locationList.forEach(({ location }) => {
         const { lat, lng } = location
-        setMaker(mapRef.current!, lat, lng)
+        setMaker(mapRef.current!, lat, lng, { content: 'popup!!!' })
 
         // TODO: set video list, photo list data in maker popup
       })

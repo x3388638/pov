@@ -1,6 +1,8 @@
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import 'reset-css'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
 import './style.css'
 import Home from './pages/home'

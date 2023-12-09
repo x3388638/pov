@@ -12,6 +12,10 @@ const MainImgContainer = styled.div`
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `
 
 const ImgList = styled.div`
@@ -22,6 +26,11 @@ const ImgList = styled.div`
   @container (width < 800px) {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 const Thumbnail = styled.img<{ active: boolean }>`
@@ -30,6 +39,12 @@ const Thumbnail = styled.img<{ active: boolean }>`
   object-fit: cover;
   cursor: pointer;
   filter: ${({ active }) => `brightness(${active ? '1' : '0.6'})`};
+
+  @media screen and (max-width: 480px) {
+    filter: unset;
+    aspect-ratio: unset;
+    cursor: auto;
+  }
 `
 
 interface GalleryProps {
@@ -52,7 +67,6 @@ const Gallery: FC<GalleryProps> = ({ selectedId, imageList }) => {
 
   const select = (targetId: string) => {
     setSelectedImg(imageList.find(({ id }) => id === targetId)!)
-    // TODO: history replace state
   }
 
   return (

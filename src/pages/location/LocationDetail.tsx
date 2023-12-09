@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -10,13 +10,14 @@ import {
   faMagnifyingGlassLocation,
 } from '@fortawesome/free-solid-svg-icons'
 import Carousel from 'react-grid-carousel'
+import { Map } from 'leaflet'
 
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData } from '@/interfaces'
 import Cover from '@/components/Cover'
-import useMap from '@/hooks/useMap'
 import YoutubePlayer from '@/components/YoutubePlayer'
 import Footer from '@/components/Footer'
+import { initMap, setMaker } from '@/utils/leaflet'
 import Gallery from './Gallery'
 
 const Container = styled.div`
@@ -135,28 +136,13 @@ const sortItemDate = (a: any, b: any) =>
 
 const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
   const { locationId } = useParams()
-  const { state: { itemId } = {} } = useLocation()
+  const { state } = useLocation()
+  const itemId = state?.itemId
+  const navigate = useNavigate()
   const { locationList } = useAppContext()
   const [targetLocation, setTargetLocation] = useState<
     LocationData | undefined | null
   >(undefined)
-  const targetLatLng = useMemo(
-    () =>
-      targetLocation
-        ? ([targetLocation.location.lat, targetLocation.location.lng] as [
-            number,
-            number
-          ])
-        : null,
-    [targetLocation]
-  )
-  const mapRef = useMap({
-    eleId: 'LeafletMapContainer',
-    zoom: 18,
-    ...(targetLatLng && {
-      viewCenter: targetLatLng,
-    }),
-  })
   const photoList = useMemo(() => {
     return (targetLocation?.photoList || []).sort(sortItemDate)
   }, [targetLocation])
@@ -175,124 +161,147 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
   useEffect(() => {
     if (targetLocation === null) {
-      // TODO: location not found
+      alert('Page not found.')
+      navigate('/')
     }
 
-    // TODO: set maker
+    if (targetLocation) {
+      const map = initMap({
+        eleId: 'LeafletMapContainer',
+        zoom: 18,
+        viewCenter: [targetLocation.location.lat, targetLocation.location.lng],
+      })
+
+      setMaker(
+        map as Map,
+        targetLocation.location.lat,
+        targetLocation.location.lng
+      )
+    }
   }, [targetLocation])
+
+  const navigateToListPage = () => {
+    navigate(`/${type[0]}`)
+  }
 
   return (
     <>
       <Cover />
-      <Container>
-        <Header>
-          <div
-            css={{
-              position: 'absolute',
-              bottom: '35px',
-              left: '-15px',
-              height: '20px',
-              width: '400px',
-              background: '#ffff5d',
-            }}
-          />
-          <LocationNameContainer>
-            <FontAwesomeIcon icon={faMapLocationDot} color="#ff4949" />
-            <h1>{targetLocation?.location.name}</h1>
-          </LocationNameContainer>
-          <a
-            href={`https://www.google.com/maps/@${targetLocation?.location.lat},${targetLocation?.location.lng},20z`}
-            rel="noopener noreferrer"
-            target="_blank"
-            css={{
-              position: 'relative',
-              marginLeft: '60px',
-              fontSize: '12px',
-              color: '#000',
-            }}
-          >
-            在 Google Maps 上查看
-          </a>
-        </Header>
-        <MapPositionStyle>
-          <div
-            css={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-            }}
-          >
+      {targetLocation && (
+        <Container>
+          <Header>
             <div
-              css={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-            >
-              <ItemListContainer>
-                <label>
-                  <FontAwesomeIcon icon={faImages} color="#fff" />
-                </label>
-                {!!photoList.length && (
-                  <Gallery
-                    selectedId={itemId}
-                    imageList={photoList
-                      .map(({ id, image }) => ({ id, url: image }))
-                      // FIXME: remove mock
-                      .concat([
-                        { id: 'test1', url: 'https://fakeimg.pl/250x100/' },
-                        { id: 'test2', url: 'https://fakeimg.pl/300x400/' },
-                        { id: 'test3', url: 'https://fakeimg.pl/1600x900/' },
-                        { id: 'test4', url: 'https://fakeimg.pl/900x1600/' },
-                        { id: 'test5', url: 'https://fakeimg.pl/400x300/' },
-                        { id: 'test6', url: 'https://fakeimg.pl/800x600/' },
-                      ])}
-                  />
-                )}
-              </ItemListContainer>
-              <ItemListContainer>
-                <label>
-                  <FontAwesomeIcon icon={faFilm} color="#fff" />
-                </label>
-                {videoList.length > 1 ? (
-                  <Carousel
-                    cols={1}
-                    rows={1}
-                    gap={0}
-                    mobileBreakpoint={768}
-                    loop
-                  >
-                    {videoList.map(({ youtubeId }) => (
-                      <Carousel.Item key={youtubeId}>
-                        <YoutubePlayer id={youtubeId} />
-                      </Carousel.Item>
-                    ))}
-                  </Carousel>
-                ) : (
-                  videoList.map(({ youtubeId }) => (
-                    <YoutubePlayer id={youtubeId} />
-                  ))
-                )}
-              </ItemListContainer>
-            </div>
-            <ItemListContainer>
-              {/* TODO: handel no desc */}
-              <label>
-                <FontAwesomeIcon icon={faCircleInfo} color="#fff" />
-              </label>
-              <pre>{targetLocation?.location.desc}</pre>
-            </ItemListContainer>
-          </div>
-          <MapContainer>
-            {/* TODO: navigation */}
-            <ExploreBtn>
-              <FontAwesomeIcon icon={faMagnifyingGlassLocation} color="#fff" />
-              探索其他地點
-            </ExploreBtn>
-            <div
-              id="LeafletMapContainer"
-              style={{ height: '100%', width: '100%' }}
+              css={{
+                position: 'absolute',
+                bottom: '35px',
+                left: '-15px',
+                height: '20px',
+                width: '400px',
+                maxWidth: '100vw',
+                background: '#ffff5d',
+              }}
             />
-          </MapContainer>
-        </MapPositionStyle>
-      </Container>
+            <LocationNameContainer>
+              <FontAwesomeIcon icon={faMapLocationDot} color="#ff4949" />
+              <h1>{targetLocation?.location.name}</h1>
+            </LocationNameContainer>
+            <a
+              href={`https://www.google.com/maps/@${targetLocation?.location.lat},${targetLocation?.location.lng},20z`}
+              rel="noopener noreferrer"
+              target="_blank"
+              css={{
+                position: 'relative',
+                marginLeft: '60px',
+                fontSize: '12px',
+                color: '#000',
+              }}
+            >
+              在 Google Maps 上查看
+            </a>
+          </Header>
+          <MapPositionStyle>
+            <div
+              css={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+              }}
+            >
+              <div
+                css={{
+                  display: 'flex',
+                  flexDirection: type === 'photo' ? 'column' : 'column-reverse',
+                  gap: '16px',
+                }}
+              >
+                {!!photoList.length && (
+                  <ItemListContainer>
+                    <label>
+                      <FontAwesomeIcon icon={faImages} color="#fff" />
+                    </label>
+
+                    <Gallery
+                      selectedId={itemId}
+                      imageList={photoList.map(({ id, image }) => ({
+                        id,
+                        url: image,
+                      }))}
+                    />
+                  </ItemListContainer>
+                )}
+                {!!videoList.length && (
+                  <ItemListContainer>
+                    <label>
+                      <FontAwesomeIcon icon={faFilm} color="#fff" />
+                    </label>
+                    {videoList.length > 1 ? (
+                      <Carousel
+                        cols={1}
+                        rows={1}
+                        gap={0}
+                        mobileBreakpoint={768}
+                        loop
+                      >
+                        {videoList.map(({ youtubeId }) => (
+                          <Carousel.Item key={youtubeId}>
+                            <YoutubePlayer id={youtubeId} />
+                          </Carousel.Item>
+                        ))}
+                      </Carousel>
+                    ) : (
+                      videoList.map(({ youtubeId }) => (
+                        <YoutubePlayer id={youtubeId} />
+                      ))
+                    )}
+                  </ItemListContainer>
+                )}
+              </div>
+              {targetLocation?.location.desc && (
+                <ItemListContainer>
+                  <label>
+                    <FontAwesomeIcon icon={faCircleInfo} color="#fff" />
+                  </label>
+                  <pre>{targetLocation?.location.desc}</pre>
+                </ItemListContainer>
+              )}
+            </div>
+            <MapContainer>
+              <ExploreBtn onClick={navigateToListPage}>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlassLocation}
+                  color="#fff"
+                />
+                探索其他地點
+              </ExploreBtn>
+              <div
+                id="LeafletMapContainer"
+                style={{ height: '100%', width: '100%' }}
+              />
+            </MapContainer>
+          </MapPositionStyle>
+        </Container>
+      )}
       <Footer />
     </>
   )
