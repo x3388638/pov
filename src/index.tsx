@@ -6,11 +6,10 @@ import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
 import './style.css'
 import Home from './pages/home'
-import Photo from './pages/p'
-import Video from './pages/v'
 import YoutubeRedirect from './pages/y'
 import AppContextProvider from './providers/AppContextProvider'
 import LocationDetail from './pages/location'
+import ItemList from './pages/item-list'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)
@@ -23,7 +22,7 @@ const router = createHashRouter([
   },
   {
     path: '/p',
-    element: <Photo />,
+    element: <ItemList type="photo" />,
   },
   {
     path: '/p/:locationId',
@@ -31,7 +30,7 @@ const router = createHashRouter([
   },
   {
     path: '/v',
-    element: <Video />,
+    element: <ItemList type="video" />,
   },
   {
     path: '/v/:locationId',

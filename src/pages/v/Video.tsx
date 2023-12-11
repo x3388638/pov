@@ -1,3 +1,4 @@
+// FIXME: deprecated; use @/pages/item-list
 import { FC } from 'react'
 
 const Video: FC = () => {

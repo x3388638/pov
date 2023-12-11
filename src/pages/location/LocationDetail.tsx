@@ -90,13 +90,13 @@ const MapContainer = styled.div`
 `
 
 const ItemListContainer = styled.div`
-  border-left: 3px solid #ff4949;
+  border-left: 3px solid #dc8686;
   padding-left: 3px;
   padding-bottom: 3px;
 
   > label {
     display: inline-block;
-    background: #ff4949;
+    background: #dc8686;
     color: #fff;
     font-size: 20px;
     padding: 4px 12px;
@@ -115,7 +115,7 @@ const ExploreBtnContainer = styled.div`
 `
 
 const ExploreBtn = styled.div`
-  background: #ff4949;
+  background: #dc8686;
   color: #fff;
   padding: 4px 12px;
   display: flex;
@@ -127,7 +127,7 @@ const ExploreBtn = styled.div`
   justify-content: center;
 
   :hover {
-    background: #ff2121;
+    background: #b06161;
   }
 
   @media screen and (max-width: 480px) {
@@ -269,6 +269,12 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
                         rows={1}
                         gap={0}
                         mobileBreakpoint={768}
+                        responsiveLayout={[
+                          {
+                            breakpoint: 768,
+                            gap: 4,
+                          },
+                        ]}
                         loop
                       >
                         {videoList.map(({ youtubeId }) => (
@@ -279,7 +285,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
                       </Carousel>
                     ) : (
                       videoList.map(({ youtubeId }) => (
-                        <YoutubePlayer id={youtubeId} />
+                        <YoutubePlayer key={youtubeId} id={youtubeId} />
                       ))
                     )}
                   </ItemListContainer>

@@ -140,10 +140,6 @@ const PhotoSection: FC = () => {
     navigate(`/p/${location.id}`, { state: { itemId: id } })
   }
 
-  const handleClickMore = () => {
-    console.log('TODO')
-  }
-
   return (
     <div css={{ position: 'relative' }}>
       <Carousel>
@@ -156,7 +152,7 @@ const PhotoSection: FC = () => {
       <MoreBtn
         label="更多照片"
         animationDelay={0.5}
-        onClick={handleClickMore}
+        onClick={() => navigate('/p')}
       />
     </div>
   )

@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import Carousel from 'react-grid-carousel'
 import styled from '@emotion/styled'
 import shuffle from 'lodash.shuffle'
+import { useNavigate } from 'react-router-dom'
 
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData, Video } from '@/interfaces'
@@ -28,6 +29,7 @@ const CarouselContainer = styled.div`
 
 const VideoSection: FC = () => {
   const { locationList } = useAppContext()
+  const navigate = useNavigate()
   const [videoList, setVideoList] = useState<Video[]>([])
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const VideoSection: FC = () => {
           gap={10}
           mobileBreakpoint={768}
           loop
+          autoplay={5000}
           responsiveLayout={[
             {
               breakpoint: 900,
@@ -107,9 +110,7 @@ const VideoSection: FC = () => {
       <MoreBtn
         label="更多影片"
         animationDelay={1.5}
-        onClick={() => {
-          console.log('TODO')
-        }}
+        onClick={() => navigate('/v')}
       />
     </Container>
   )

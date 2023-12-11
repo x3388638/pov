@@ -34,7 +34,7 @@ const Container = styled.div<{ animationDelay: number }>`
   display: inline-flex;
   gap: 12px;
   padding: 18px 50px;
-  background: #f37d6d;
+  background: #dc8686;
   color: #fff;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0, 0, 0.2, 1) 0s;
@@ -51,7 +51,7 @@ const Container = styled.div<{ animationDelay: number }>`
   animation-fill-mode: forwards;
 
   &:hover {
-    background: #d66d5f;
+    background: #b06161;
   }
 
   @media screen and (max-width: 480px) {
