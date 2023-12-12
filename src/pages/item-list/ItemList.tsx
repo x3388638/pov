@@ -1,10 +1,12 @@
 import { FC, useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 
 import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData } from '@/interfaces'
+import Filter from './Filter'
 import { ItemType } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
 
@@ -49,47 +51,72 @@ interface ItemListProps {
 }
 
 const ItemList: FC<ItemListProps> = ({ type }) => {
-  const { title, itemListKey } = useMemo(() => config[type], [type])
   const { locationList } = useAppContext()
-  const sortedList = useMemo(() => {
-    const list: LocationData[] = []
-    locationList.forEach((locationData) => {
-      const itemList = locationData[itemListKey]
-      if (!itemList.length) {
-        return
-      }
-
-      list.push({
-        ...locationData,
-        [itemListKey]: itemList.sort(
-          (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
-        ),
-      })
-    })
-
-    return list.sort(
-      (a, b) =>
-        new Date(b[itemListKey][0].date).valueOf() -
-        new Date(a[itemListKey][0].date).valueOf()
-    )
-  }, [locationList, itemListKey])
+  const navigate = useNavigate()
+  const { title, itemListKey } = useMemo(() => config[type], [type])
+  const [sortedList, setSortedList] = useState<LocationData[]>([])
+  const [availableTagList, setAvailableTagList] = useState<string[]>([])
   const [page, setPage] = useState(1)
   // TODO: infinite scroll
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
 
   useEffect(() => {
+    if (locationList.length) {
+      const list: LocationData[] = []
+      const tagList: string[] = []
+      locationList.forEach((locationData) => {
+        const itemList = locationData[itemListKey]
+        if (!itemList.length) {
+          return
+        }
+
+        itemList.forEach(({ tags }) => {
+          tagList.push(...(tags || []))
+        })
+
+        list.push({
+          ...locationData,
+          [itemListKey]: itemList.sort(
+            (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
+          ),
+        })
+      })
+
+      setSortedList(
+        list.sort(
+          (a, b) =>
+            new Date(b[itemListKey][0].date).valueOf() -
+            new Date(a[itemListKey][0].date).valueOf()
+        )
+      )
+
+      setAvailableTagList([...new Set(tagList)].sort())
+    }
+  }, [locationList, itemListKey])
+
+  useEffect(() => {
     setRevealedItemList(sortedList.slice(0, page * PAGE_ITEM_COUNT))
   }, [page, sortedList])
+
+  const handleFilterChange = (list: string[], logic: 'AND' | 'OR') => {
+    // TODO
+    console.log({ list, logic })
+  }
 
   return (
     <>
       <Cover />
       <Container>
         <div>{title}</div>
-        <div>filter</div>
+        <div css={{ margin: '12px 0' }}>
+          <Filter tagList={availableTagList} onSelect={handleFilterChange} />
+        </div>
         <div css={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {revealedItemList.map(({ location, videoList, photoList }) => (
-            <ItemContainer key={location.id}>
+            <ItemContainer
+              key={location.id}
+              onClick={() => navigate(`/${type[0]}/${location.id}`)}
+            >
               <div
                 css={{
                   fontSize: '24px',
