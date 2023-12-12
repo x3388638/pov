@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 
-type Logic = 'AND' | 'OR'
+import { Logic } from './interfaces'
 
 interface FilterProps {
   tagList: string[]
@@ -82,7 +82,7 @@ const LogicSelector: FC<LogicSelectorProps> = ({
 }
 
 const Filter: FC<FilterProps> = ({ tagList, onSelect }) => {
-  const [logic, setLogic] = useState<Logic>('AND')
+  const [logic, setLogic] = useState<Logic>('OR')
   const [selectTagList, setSelectedTagList] = useState<string[]>([])
 
   useEffect(() => {

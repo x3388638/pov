@@ -7,13 +7,17 @@ import Footer from '@/components/Footer'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData } from '@/interfaces'
 import Filter from './Filter'
-import { ItemType } from './interfaces'
+import { ItemFilter, ItemType } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
+import { filterItemList } from './utils'
 
 const Container = styled.div`
+  box-sizing: border-box;
+  width: 100%;
   max-width: 1300px;
   margin: 0 auto;
   padding: 20px;
+  flex: 1;
 `
 
 const ItemContainer = styled.div`
@@ -58,6 +62,8 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [availableTagList, setAvailableTagList] = useState<string[]>([])
   const [page, setPage] = useState(1)
   // TODO: infinite scroll
+  const [filter, setFilter] = useState<ItemFilter>()
+  const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
 
   useEffect(() => {
@@ -95,16 +101,26 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   }, [locationList, itemListKey])
 
   useEffect(() => {
-    setRevealedItemList(sortedList.slice(0, page * PAGE_ITEM_COUNT))
-  }, [page, sortedList])
+    setFilteredItemList(filterItemList(sortedList, itemListKey, filter))
+  }, [filter, sortedList, itemListKey])
+
+  useEffect(() => {
+    setRevealedItemList(filteredItemList.slice(0, page * PAGE_ITEM_COUNT))
+  }, [page, filteredItemList])
 
   const handleFilterChange = (list: string[], logic: 'AND' | 'OR') => {
-    // TODO
-    console.log({ list, logic })
+    if (!list.length) {
+      setFilter(undefined)
+    } else {
+      setFilter({
+        tags: list,
+        logic,
+      })
+    }
   }
 
   return (
-    <>
+    <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Cover />
       <Container>
         <div>{title}</div>
@@ -141,7 +157,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
         </div>
       </Container>
       <Footer />
-    </>
+    </div>
   )
 }
 
