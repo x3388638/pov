@@ -1,6 +1,8 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
+import { faPhotoFilm, faShuffle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
@@ -18,6 +20,32 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
   flex: 1;
+`
+
+const TitleContainer = styled.div`
+  position: relative;
+  display: flex;
+  gap: 12px;
+  font-size: 32px;
+  padding: 20px 0;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const ExploreBtn = styled.div`
+  font-size: 16px;
+  background: #dc8686;
+  color: #fff;
+  padding: 4px 8px;
+  white-space: nowrap;
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+
+  :hover {
+    background: #b06161;
+  }
 `
 
 const ItemContainer = styled.div`
@@ -155,7 +183,41 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Cover />
       <Container>
-        <div>{title}</div>
+        <TitleContainer>
+          <div
+            css={{
+              position: 'absolute',
+              top: '35px',
+              left: '-20px',
+              height: '20px',
+              width: '450px',
+              maxWidth: '80vw',
+              background: '#ffff5d',
+            }}
+          />
+          <FontAwesomeIcon
+            icon={faPhotoFilm}
+            color="#ff4949"
+            css={{ position: 'relative' }}
+          />
+          <span css={{ position: 'relative' }}>{title}</span>
+          <div
+            css={{
+              position: 'relative',
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignSelf: 'flex-end',
+            }}
+          >
+            <ExploreBtn
+              onClick={() => navigate(`/${type === 'photo' ? 'v' : 'p'}`)}
+            >
+              <FontAwesomeIcon icon={faShuffle} />
+              <span>看{type === 'photo' ? '影片' : '照片'}</span>
+            </ExploreBtn>
+          </div>
+        </TitleContainer>
         <div css={{ margin: '12px 0' }}>
           <Filter tagList={availableTagList} onSelect={handleFilterChange} />
         </div>

@@ -9,7 +9,7 @@ export const config: Config = {
     itemListKey: 'photoList',
   },
   video: {
-    title: '影片列表',
+    title: '第一人稱開車影片 (POV)',
     itemListKey: 'videoList',
   },
 }
