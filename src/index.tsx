@@ -10,6 +10,7 @@ import YoutubeRedirect from './pages/y'
 import AppContextProvider from './providers/AppContextProvider'
 import LocationDetail from './pages/location'
 import ItemList from './pages/item-list'
+import NotFound from './pages/not-found'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)
@@ -18,7 +19,7 @@ const router = createHashRouter([
   {
     path: '/',
     element: <Home />,
-    errorElement: <div>error</div>,
+    errorElement: <NotFound />,
   },
   {
     path: '/p',
