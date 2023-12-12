@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 
@@ -54,6 +54,32 @@ interface ItemListProps {
   type: ItemType
 }
 
+interface InfiniteScrollTriggerProps {
+  onTrigger: () => void
+}
+
+const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
+  onTrigger,
+}) => {
+  const eleRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio > 0) {
+        onTrigger()
+      }
+    })
+
+    observer.observe(eleRef.current!)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [onTrigger])
+
+  return <div ref={eleRef}></div>
+}
+
 const ItemList: FC<ItemListProps> = ({ type }) => {
   const { locationList } = useAppContext()
   const navigate = useNavigate()
@@ -61,7 +87,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [sortedList, setSortedList] = useState<LocationData[]>([])
   const [availableTagList, setAvailableTagList] = useState<string[]>([])
   const [page, setPage] = useState(1)
-  // TODO: infinite scroll
   const [filter, setFilter] = useState<ItemFilter>()
   const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
@@ -102,6 +127,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
 
   useEffect(() => {
     setFilteredItemList(filterItemList(sortedList, itemListKey, filter))
+    setPage(1)
   }, [filter, sortedList, itemListKey])
 
   useEffect(() => {
@@ -118,6 +144,12 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
       })
     }
   }
+
+  const loadNextPage = useCallback(() => {
+    if (revealedItemList.length < filteredItemList.length) {
+      setPage((p) => p + 1)
+    }
+  }, [revealedItemList, filteredItemList])
 
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -154,6 +186,9 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
               )}
             </ItemContainer>
           ))}
+          {!!revealedItemList.length && (
+            <InfiniteScrollTrigger onTrigger={loadNextPage} />
+          )}
         </div>
       </Container>
       <Footer />
