@@ -55,7 +55,7 @@ const LocationNameContainer = styled.div`
     font-size: 28px;
   }
 
-  @media screen and (max-width: 480) {
+  @media screen and (max-width: 480px) {
     font-size: 24px;
   }
 `

@@ -6,6 +6,7 @@ export type Config = Record<
   {
     title: string
     itemListKey: ItemListKey
+    containerMaxWidth: string
   }
 >
 

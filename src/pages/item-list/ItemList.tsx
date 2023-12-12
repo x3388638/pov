@@ -13,13 +13,17 @@ import { ItemFilter, ItemType } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
 import { filterItemList } from './utils'
 
-const Container = styled.div`
+const Container = styled.div<{ maxWidth: string }>`
   box-sizing: border-box;
   width: 100%;
-  max-width: 1300px;
+  max-width: ${({ maxWidth }) => maxWidth};
   margin: 0 auto;
   padding: 20px;
   flex: 1;
+
+  @media screen and (max-width: 768px) {
+    padding: 20px 0;
+  }
 `
 
 const TitleContainer = styled.div`
@@ -30,6 +34,15 @@ const TitleContainer = styled.div`
   padding: 20px 0;
   align-items: center;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    padding: 20px 0px 20px 20px;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 24px;
+  }
 `
 
 const ExploreBtn = styled.div`
@@ -59,6 +72,13 @@ const ItemContainer = styled.div`
     transform: translate3d(0px, -5px, 0px);
     box-shadow: rgba(7, 7, 7, 0.5) 0px 5px 5px 0px;
   }
+
+  @media screen and (max-width: 480px) {
+    &:hover {
+      transform: unset;
+      box-shadow: unset;
+    }
+  }
 `
 
 const ThumbnailRail = styled.div`
@@ -66,10 +86,15 @@ const ThumbnailRail = styled.div`
   white-space: nowrap;
   overflow: auto;
   display: flex;
+  gap: 4px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 200px;
   }
 `
 
@@ -111,7 +136,10 @@ const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
 const ItemList: FC<ItemListProps> = ({ type }) => {
   const { locationList } = useAppContext()
   const navigate = useNavigate()
-  const { title, itemListKey } = useMemo(() => config[type], [type])
+  const { title, itemListKey, containerMaxWidth } = useMemo(
+    () => config[type],
+    [type]
+  )
   const [sortedList, setSortedList] = useState<LocationData[]>([])
   const [availableTagList, setAvailableTagList] = useState<string[]>([])
   const [page, setPage] = useState(1)
@@ -182,7 +210,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Cover />
-      <Container>
+      <Container maxWidth={containerMaxWidth}>
         <TitleContainer>
           <div
             css={{
@@ -244,7 +272,15 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
                 </ThumbnailRail>
               )}
               {type === 'video' && (
-                <div>{videoList.map(({ youtubeId }) => youtubeId)}</div>
+                <div>
+                  {videoList.map(({ youtubeId }, i) => (
+                    <img
+                      key={i}
+                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                      width="100%"
+                    />
+                  ))}
+                </div>
               )}
             </ItemContainer>
           ))}
