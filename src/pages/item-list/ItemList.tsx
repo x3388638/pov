@@ -46,18 +46,24 @@ const TitleContainer = styled.div`
 `
 
 const ExploreBtn = styled.div`
-  font-size: 16px;
+  position: fixed;
+  right: 0;
+  bottom: 50px;
+  font-size: 18px;
   background: #dc8686;
   color: #fff;
-  padding: 4px 8px;
-  white-space: nowrap;
+  padding: 8px 12px;
   display: flex;
   gap: 8px;
-  font-size: 14px;
   cursor: pointer;
 
   :hover {
     background: #b06161;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    padding: 4px 8px;
   }
 `
 
@@ -244,6 +250,12 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Cover />
       <Container maxWidth={containerMaxWidth}>
+        <ExploreBtn
+          onClick={() => navigate(`/${type === 'photo' ? 'v' : 'p'}`)}
+        >
+          <FontAwesomeIcon icon={faShuffle} />
+          <span>看{type === 'photo' ? '影片' : '照片'}</span>
+        </ExploreBtn>
         <TitleContainer>
           <div
             css={{
@@ -262,22 +274,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
             css={{ position: 'relative' }}
           />
           <span css={{ position: 'relative' }}>{title}</span>
-          <div
-            css={{
-              position: 'relative',
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignSelf: 'flex-end',
-            }}
-          >
-            <ExploreBtn
-              onClick={() => navigate(`/${type === 'photo' ? 'v' : 'p'}`)}
-            >
-              <FontAwesomeIcon icon={faShuffle} />
-              <span>看{type === 'photo' ? '影片' : '照片'}</span>
-            </ExploreBtn>
-          </div>
         </TitleContainer>
         <div css={{ margin: '12px 0' }}>
           <Filter tagList={availableTagList} onSelect={handleFilterChange} />
