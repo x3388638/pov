@@ -5,7 +5,6 @@ const NotFound: FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    alert('Page not found.')
     navigate('/')
   }, [])
 

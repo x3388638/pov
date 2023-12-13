@@ -14,6 +14,7 @@ import { Map } from 'leaflet'
 
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData } from '@/interfaces'
+import Helmet from '@/components/Helmet'
 import Cover from '@/components/Cover'
 import YoutubePlayer from '@/components/YoutubePlayer'
 import Footer from '@/components/Footer'
@@ -157,6 +158,39 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
   const videoList = useMemo(() => {
     return (targetLocation?.videoList || []).sort(sortItemDate)
   }, [targetLocation])
+  const metaTitle = useMemo(() => {
+    const locationName = targetLocation?.location.name
+
+    if (!locationName) {
+      return undefined
+    }
+
+    let title = locationName
+
+    if (photoList.length) {
+      title += '|車拍|解任務|拍車景點'
+    }
+
+    if (videoList.length) {
+      title += '|第一人稱開車視角影片|路線導覽|POV Drive'
+    }
+
+    return title
+  }, [targetLocation, photoList, videoList])
+  const metaImage = useMemo(() => {
+    let img = undefined
+    if (type === 'photo') {
+      const image = photoList?.[0]?.image
+      img = image ? `https:${image}` : undefined
+    } else {
+      const id = videoList?.[0]?.youtubeId || undefined
+      img = id
+        ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+        : undefined
+    }
+
+    return img
+  }, [photoList, videoList, type])
 
   useEffect(() => {
     if (locationId && locationList.length) {
@@ -194,6 +228,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
   return (
     <>
+      <Helmet title={metaTitle} image={metaImage} />
       <Cover />
       {targetLocation && (
         <Container>

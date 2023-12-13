@@ -1,10 +1,12 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
 import Loading from '@/components/Loading'
 import { useAppContext } from '@/providers/AppContextProvider'
+import Helmet from '@/components/Helmet'
+import { LocationData } from '@/interfaces'
 
 const YoutubeRedirect: FC = () => {
   const { id = '' } = useParams()
@@ -13,11 +15,27 @@ const YoutubeRedirect: FC = () => {
   const [youtubeId, setYoutubeId] = useState<string | null | undefined>(
     undefined
   )
+  const [targetLocation, setTargetLocation] = useState<LocationData>()
+  const metaTitle = useMemo(() => {
+    const locationName = targetLocation?.location?.name
+    if (!locationName) {
+      return undefined
+    }
+
+    return `前往 YouTube 觀看 ${locationName} 影片`
+  }, [targetLocation])
+  const coverImg = useMemo(() => {
+    if (!youtubeId) {
+      return undefined
+    }
+
+    return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+  }, [youtubeId])
 
   useEffect(() => {
     if (locationList?.length && id) {
       let result = null
-      locationList.find(({ videoList }) => {
+      const location = locationList.find(({ videoList }) => {
         const targetVideo = (videoList || []).find(
           ({ redirectId }) => String(redirectId) === id
         )
@@ -30,6 +48,7 @@ const YoutubeRedirect: FC = () => {
         return false
       })
 
+      setTargetLocation(location)
       setYoutubeId(result)
     }
   }, [locationList, id])
@@ -47,6 +66,7 @@ const YoutubeRedirect: FC = () => {
 
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Helmet title={metaTitle} image={coverImg} />
       <Cover />
       {youtubeId && (
         <div
@@ -61,10 +81,7 @@ const YoutubeRedirect: FC = () => {
           <div css={{ fontSize: '24px', padding: '20px' }}>
             正在導向至 YouTube...
           </div>
-          <img
-            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-            css={{ width: '100%', maxWidth: '800px' }}
-          />
+          <img src={coverImg} css={{ width: '100%', maxWidth: '800px' }} />
           <Loading />
         </div>
       )}

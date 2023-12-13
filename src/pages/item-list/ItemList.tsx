@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
+import Helmet from '@/components/Helmet'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData } from '@/interfaces'
 import Filter from './Filter'
@@ -56,6 +57,7 @@ const ExploreBtn = styled.div`
   display: flex;
   gap: 8px;
   cursor: pointer;
+  z-index: 2;
 
   :hover {
     background: #b06161;
@@ -175,7 +177,7 @@ const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
 const ItemList: FC<ItemListProps> = ({ type }) => {
   const { locationList } = useAppContext()
   const navigate = useNavigate()
-  const { title, itemListKey, containerMaxWidth } = useMemo(
+  const { title, itemListKey, containerMaxWidth, metaTitle } = useMemo(
     () => config[type],
     [type]
   )
@@ -248,6 +250,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
 
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Helmet title={metaTitle} />
       <Cover />
       <Container maxWidth={containerMaxWidth}>
         <ExploreBtn
