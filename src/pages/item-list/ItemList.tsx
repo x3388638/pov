@@ -82,25 +82,23 @@ const ItemContainer = styled.div`
 `
 
 const ThumbnailRail = styled.div`
-  height: 300px;
   white-space: nowrap;
   overflow: auto;
   display: flex;
   gap: 4px;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
-
-  @media screen and (max-width: 480px) {
-    height: 200px;
-  }
 `
 
 const Thumbnail = styled.img`
-  height: 100%;
-  display: flex-inline;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  scroll-snap-align: center;
+  max-height: 80vh;
 `
 
 interface ItemListProps {
@@ -267,7 +265,11 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
               {type === 'photo' && (
                 <ThumbnailRail>
                   {photoList.map(({ image }, i) => (
-                    <Thumbnail key={i} src={image} />
+                    <Thumbnail
+                      key={i}
+                      src={image}
+                      width={photoList.length > 2 ? '90%' : '100%'}
+                    />
                   ))}
                 </ThumbnailRail>
               )}
