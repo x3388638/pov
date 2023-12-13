@@ -84,21 +84,16 @@ const ItemContainer = styled.div`
 const ThumbnailRail = styled.div`
   white-space: nowrap;
   overflow: auto;
-  display: flex;
-  gap: 4px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
-`
 
-const Thumbnail = styled.img`
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  scroll-snap-align: center;
-  max-height: 80vh;
+  & > div + div {
+    margin-left: 4px;
+  }
 `
 
 interface ItemListProps {
@@ -107,6 +102,46 @@ interface ItemListProps {
 
 interface InfiniteScrollTriggerProps {
   onTrigger: () => void
+}
+
+interface ThumbnailProps {
+  imgSrc: string
+  width: string
+}
+
+const Thumbnail: FC<ThumbnailProps> = ({ imgSrc, width }) => {
+  const [showImg, setShowImg] = useState(false)
+  const eleRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio > 0) {
+        setShowImg(true)
+        observer.disconnect()
+      }
+    })
+
+    observer.observe(eleRef.current!)
+  }, [])
+
+  return (
+    <div
+      ref={eleRef}
+      css={{
+        display: 'inline-block',
+        aspectRatio: '1/1',
+        scrollSnapAlign: 'center',
+        maxHeight: '80vh',
+        backgroundColor: '#eee',
+        width,
+        ...(showImg && {
+          backgroundImage: `url(${imgSrc})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }),
+      }}
+    />
+  )
 }
 
 const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
@@ -267,7 +302,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
                   {photoList.map(({ image }, i) => (
                     <Thumbnail
                       key={i}
-                      src={image}
+                      imgSrc={image}
                       width={photoList.length > 2 ? '90%' : '100%'}
                     />
                   ))}
