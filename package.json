@@ -12,7 +12,7 @@
     "prettier:write": "prettier --write './**/*.{js,json,css}'",
     "prepare": "husky install",
     "contentful:fetch": "node ./public/contentful.js",
-    "deploy": "npm run lint && npm run prettier:check && npm run build && gh-pages -d dist -b master"
+    "deploy": "npm run lint && npm run prettier:check && npm run build && gh-pages -d dist -b master -t"
   },
   "repository": {
     "type": "git",
