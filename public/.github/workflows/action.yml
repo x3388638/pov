@@ -1,0 +1,28 @@
+name: Update Contentful data
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 15 * * *'
+      branches:
+        - master
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch Contentful data
+        run: SPACE_ID=${{secrets.CONTENTFUL_SPACE_ID}} ACCESS_TOKEN=${{secrets.CONTENTFUL_ACCESS_TOKEN}} node ./contentful.js
+      - name: Commit to GitHub
+        run: |
+          git config --global user.name "YY"
+          git config --global user.email "z3388638@gmail.com"
+          git add .
+          git commit -m "Update Contentful data"
+          git push --no-verify

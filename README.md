@@ -1,6 +1,6 @@
 # pov
 
-A pure frontend app integrated with Contentful (headless CMS) collects car photography and POV driving videos to share the beauty of Taiwan
+A pure frontend app integrated with Contentful (headless CMS) collects car photography and POV driving videos to share the beauty of Taiwan.
 
 ## Dev note
 
@@ -32,3 +32,15 @@ built result: /dist
 ```
 SPACE_ID={{SPACE ID}} ACCESS_TOKEN={{ACCESS TOKEN}} npm run contentful:fetch
 ```
+
+### Deploy
+
+```
+npm run deploy
+```
+
+it will build, put built files to master branch, and push to GitHub
+
+### GitHub Actions
+
+refer to `/public/.github/workflows/action.yml`
