@@ -8,9 +8,10 @@ import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
 import Helmet from '@/components/Helmet'
 import { useAppContext } from '@/providers/AppContextProvider'
-import { LocationData } from '@/interfaces'
+import { ItemType, LocationData } from '@/interfaces'
+import { genBreadcrumb } from '@/utils/jsonLd'
 import Filter from './Filter'
-import { ItemFilter, ItemType } from './interfaces'
+import { ItemFilter } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
 import { filterItemList } from './utils'
 
@@ -250,9 +251,9 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
 
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Helmet title={metaTitle} />
+      <Helmet title={metaTitle} jsonLd={genBreadcrumb(2, type)} />
       <Cover />
-      <Container maxWidth={containerMaxWidth}>
+      <Container key={type} maxWidth={containerMaxWidth}>
         <ExploreBtn
           onClick={() => navigate(`/${type === 'photo' ? 'v' : 'p'}`)}
         >

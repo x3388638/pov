@@ -13,12 +13,13 @@ import Carousel from 'react-grid-carousel'
 import { Map } from 'leaflet'
 
 import { useAppContext } from '@/providers/AppContextProvider'
-import { LocationData } from '@/interfaces'
+import { ItemType, LocationData } from '@/interfaces'
 import Helmet from '@/components/Helmet'
 import Cover from '@/components/Cover'
 import YoutubePlayer from '@/components/YoutubePlayer'
 import Footer from '@/components/Footer'
 import { initMap, setMarker } from '@/utils/leaflet'
+import { genBreadcrumb } from '@/utils/jsonLd'
 import Gallery from './Gallery'
 
 const Container = styled.div`
@@ -137,7 +138,7 @@ const ExploreBtn = styled.div`
 `
 
 interface LocationDetailProps {
-  type: 'video' | 'photo'
+  type: ItemType
 }
 
 const sortItemDate = (a: any, b: any) =>
@@ -152,12 +153,15 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
   const [targetLocation, setTargetLocation] = useState<
     LocationData | undefined | null
   >(undefined)
+
   const photoList = useMemo(() => {
     return (targetLocation?.photoList || []).sort(sortItemDate)
   }, [targetLocation])
+
   const videoList = useMemo(() => {
     return (targetLocation?.videoList || []).sort(sortItemDate)
   }, [targetLocation])
+
   const metaTitle = useMemo(() => {
     const locationName = targetLocation?.location.name
 
@@ -177,6 +181,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
     return title
   }, [targetLocation, photoList, videoList])
+
   const metaImage = useMemo(() => {
     let img = undefined
     if (type === 'photo') {
@@ -191,6 +196,15 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
     return img
   }, [photoList, videoList, type])
+
+  const jsonLd = useMemo(() => {
+    const locationName = targetLocation?.location?.name
+    if (!locationName) {
+      return undefined
+    }
+
+    return genBreadcrumb(3, type, locationName)
+  }, [type, targetLocation])
 
   useEffect(() => {
     if (locationId && locationList.length) {
@@ -228,7 +242,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
   return (
     <>
-      <Helmet title={metaTitle} image={metaImage} />
+      <Helmet title={metaTitle} image={metaImage} jsonLd={jsonLd} />
       <Cover />
       {targetLocation && (
         <Container>

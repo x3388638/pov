@@ -8,6 +8,8 @@ export interface Location {
   desc?: string
 }
 
+export type ItemType = 'video' | 'photo'
+
 export interface Photo {
   id: string
   image: string // url

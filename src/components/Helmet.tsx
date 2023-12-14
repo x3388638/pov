@@ -7,6 +7,7 @@ interface ComponentProps {
   title?: string
   desc?: string
   image?: string
+  jsonLd?: string
 }
 
 const DEFAULT_TITLE =
@@ -17,7 +18,7 @@ const DEFAULT_DESC =
 
 const DEFAULT_IMAGE = `${location.origin}${ogImg}`
 
-const Component: FC<ComponentProps> = ({ title, desc, image }) => {
+const Component: FC<ComponentProps> = ({ title, desc, image, jsonLd }) => {
   return (
     <Helmet>
       <title>{title || DEFAULT_TITLE}</title>
@@ -30,6 +31,7 @@ const Component: FC<ComponentProps> = ({ title, desc, image }) => {
       <meta property="og:image" content={image || DEFAULT_IMAGE} />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:width" content="1200" />
+      {jsonLd && <script type="application/ld+json">{jsonLd}</script>}
     </Helmet>
   )
 }
