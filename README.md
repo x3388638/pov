@@ -43,4 +43,5 @@ it will build, put built files to master branch, and push to GitHub
 
 ### GitHub Actions
 
-refer to `/public/.github/workflows/action.yml`
+Push event: `/public/.github/workflows/action.yml`
+Cronjob: `/.github/workflows/action.yml`
