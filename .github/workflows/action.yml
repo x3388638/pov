@@ -1,4 +1,4 @@
-name: Update Contentful data
+name: Update Contentful data on release
 on:
   push:
     branches:
