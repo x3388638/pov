@@ -39,6 +39,7 @@ const Thumbnail = styled.img<{ active: boolean }>`
   object-fit: cover;
   cursor: pointer;
   filter: ${({ active }) => `brightness(${active ? '1' : '0.6'})`};
+  background: #fafafa;
 
   @media screen and (max-width: 480px) {
     filter: unset;
