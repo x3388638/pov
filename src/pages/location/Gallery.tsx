@@ -20,11 +20,11 @@ const MainImgContainer = styled.div`
 
 const ImgList = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 4px;
 
   @container (width < 800px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
   @media screen and (max-width: 480px) {
