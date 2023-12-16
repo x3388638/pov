@@ -7,7 +7,7 @@ export const config: Config = {
     title: '拍車景點',
     metaTitle: '全台拍車景點列表|解任務清單|美景地圖|停車場導覽',
     itemListKey: 'photoList',
-    containerMaxWidth: '1000px',
+    containerMaxWidth: '800px',
   },
   video: {
     title: '第一人稱開車影片 (POV)',

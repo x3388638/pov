@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { Logic } from './interfaces'
 
@@ -84,6 +86,7 @@ const LogicSelector: FC<LogicSelectorProps> = ({
 const Filter: FC<FilterProps> = ({ tagList, onSelect }) => {
   const [logic, setLogic] = useState<Logic>('OR')
   const [selectTagList, setSelectedTagList] = useState<string[]>([])
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
   useEffect(() => {
     onSelect(selectTagList, logic)
@@ -101,33 +104,47 @@ const Filter: FC<FilterProps> = ({ tagList, onSelect }) => {
     setLogic(logic)
   }
 
+  const toggleCollapse = () => {
+    setIsCollapsed((val) => !val)
+  }
+
   return (
     <Container>
-      <RowContainer>
-        <span>分類</span>
-        <TagListContainer>
-          {tagList.map((tag) => {
-            const isSelected = selectTagList.includes(tag)
-            return (
-              <Tag
-                key={tag}
-                selected={isSelected}
-                label={tag}
-                onClick={() => handleSelectTag(tag, !isSelected)}
-              />
-            )
-          })}
-        </TagListContainer>
-      </RowContainer>
-      <Divider />
-      <RowContainer>
-        <span>條件</span>
-        <LogicSelector
-          active={selectTagList.length > 1}
-          logic={logic}
-          onChange={handleChangeLogic}
-        />
-      </RowContainer>
+      <div
+        css={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+        onClick={toggleCollapse}
+      >
+        <FontAwesomeIcon icon={isCollapsed ? faCaretDown : faCaretUp} />
+      </div>
+      {!isCollapsed && (
+        <>
+          <RowContainer>
+            <span>分類</span>
+            <TagListContainer>
+              {tagList.map((tag) => {
+                const isSelected = selectTagList.includes(tag)
+                return (
+                  <Tag
+                    key={tag}
+                    selected={isSelected}
+                    label={tag}
+                    onClick={() => handleSelectTag(tag, !isSelected)}
+                  />
+                )
+              })}
+            </TagListContainer>
+          </RowContainer>
+          <Divider />
+          <RowContainer>
+            <span>條件</span>
+            <LogicSelector
+              active={selectTagList.length > 1}
+              logic={logic}
+              onChange={handleChangeLogic}
+            />
+          </RowContainer>
+        </>
+      )}
     </Container>
   )
 }

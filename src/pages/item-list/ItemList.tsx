@@ -303,7 +303,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
                     <Thumbnail
                       key={i}
                       imgSrc={image}
-                      width={photoList.length > 2 ? '90%' : '100%'}
+                      width={photoList.length > 1 ? '60%' : '100%'}
                     />
                   ))}
                 </ThumbnailRail>

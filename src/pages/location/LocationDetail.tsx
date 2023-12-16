@@ -171,16 +171,14 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
     let title = locationName
 
-    if (photoList.length) {
+    if (type === 'photo') {
       title += '|車拍|解任務|拍車景點'
-    }
-
-    if (videoList.length) {
-      title += '|第一人稱開車視角影片|路線導覽|POV Drive'
+    } else {
+      title += '|停車場導覽|第一人稱開車視角影片|路線導覽|POV Drive'
     }
 
     return title
-  }, [targetLocation, photoList, videoList])
+  }, [targetLocation, type])
 
   const metaImage = useMemo(() => {
     let img = undefined
