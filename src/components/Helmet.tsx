@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { Helmet } from 'react-helmet'
 
-import ogImg from '@/assets/images/ogImg.jpg'
-
 interface ComponentProps {
   title?: string
   desc?: string
@@ -16,7 +14,7 @@ const DEFAULT_TITLE =
 const DEFAULT_DESC =
   '搜集全台灣台北、台中、宜蘭、澎湖等各地解任務拍車景點，分享美麗風景；提供第一人稱視角的開車影片導覽各景點、停車場進出動線及內部動線，或是搭配輕鬆音樂一起徜徉在公路美景之中'
 
-const DEFAULT_IMAGE = `${location.origin}${ogImg}`
+const DEFAULT_IMAGE = 'https://pov.tw/ogImg.jpg'
 
 const Component: FC<ComponentProps> = ({ title, desc, image, jsonLd }) => {
   return (
