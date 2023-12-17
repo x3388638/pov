@@ -1,4 +1,4 @@
-name: Schedule update Contentful data
+name: Schedule update Contentful data & sitemap
 on:
   schedule:
     - cron: '0 15 * * *'
@@ -16,10 +16,12 @@ jobs:
           node-version: 20
       - name: Fetch Contentful data
         run: SPACE_ID=${{secrets.CONTENTFUL_SPACE_ID}} ACCESS_TOKEN=${{secrets.CONTENTFUL_ACCESS_TOKEN}} node ./contentful.js
+      - name: Update sitemap
+        run: node ./sitemap.js
       - name: Commit to GitHub
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add contentfulEntries.json
-          git commit -m "Update Contentful data" || echo "Nothing to commit"
+          git add contentfulEntries.json sitemap.txt
+          git commit -m "Update Contentful data & sitemap" || echo "Nothing to commit"
           git push --no-verify
