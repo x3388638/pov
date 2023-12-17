@@ -70,7 +70,6 @@ const VideoSection: FC = () => {
           gap={10}
           mobileBreakpoint={768}
           loop
-          autoplay={5000}
           responsiveLayout={[
             {
               breakpoint: 900,
