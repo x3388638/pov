@@ -52,20 +52,22 @@ const ImgContainer = styled.div`
 `
 
 const Image: FC<{ photo: Photo }> = ({ photo }) => {
-  const { image, resolution: { height = 3, width = 4 } = {} } = photo
+  const { id, image, resolution: { height = 3, width = 4 } = {} } = photo
   const [showImg, setShowImg] = useState(false)
   const placeholderRef = useRef(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].intersectionRatio > 0) {
-        setShowImg(true)
-        observer.disconnect()
-      }
-    })
+    if (id != undefined) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].intersectionRatio > 0) {
+          setShowImg(true)
+          observer.disconnect()
+        }
+      })
 
-    observer.observe(placeholderRef.current!)
-  }, [])
+      observer.observe(placeholderRef.current!)
+    }
+  }, [id])
 
   return (
     <div
@@ -102,6 +104,10 @@ const PhotoSection: FC = () => {
   }, [locationList])
 
   const initPhotoList = (locationList: LocationData[]) => {
+    if (!locationList.length) {
+      return
+    }
+
     const pinned: Photo[] = []
     const nonPinned: Photo[] = []
     const result: Photo[] = []

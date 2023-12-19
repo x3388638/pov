@@ -8,6 +8,7 @@ import { useAppContext } from '@/providers/AppContextProvider'
 import { LocationData, Video } from '@/interfaces'
 import { VIDEO_SECTION_ITEM_COUNT } from './constants'
 import YoutubePlayer from '@/components/YoutubePlayer'
+import Loading from '@/components/Loading'
 import MoreBtn from './MoreBtn'
 
 const Container = styled.div`
@@ -30,13 +31,19 @@ const CarouselContainer = styled.div`
 const VideoSection: FC = () => {
   const { locationList } = useAppContext()
   const navigate = useNavigate()
-  const [videoList, setVideoList] = useState<Video[]>([])
+  const [videoList, setVideoList] = useState<Video[]>(
+    [...Array(VIDEO_SECTION_ITEM_COUNT)].map(() => ({} as Video))
+  )
 
   useEffect(() => {
     initVideoList(locationList)
   }, [locationList])
 
   const initVideoList = (locationList: LocationData[]) => {
+    if (!locationList.length) {
+      return
+    }
+
     const pinned: Video[] = []
     const nonPinned: Video[] = []
     const result: Video[] = []
@@ -81,8 +88,8 @@ const VideoSection: FC = () => {
             },
           ]}
         >
-          {videoList.map(({ youtubeId }) => (
-            <Carousel.Item key={youtubeId}>
+          {videoList.map(({ youtubeId }, i) => (
+            <Carousel.Item key={i}>
               <div
                 css={{
                   position: 'relative',
@@ -99,7 +106,11 @@ const VideoSection: FC = () => {
                     width: '100%',
                   }}
                 >
-                  <YoutubePlayer id={youtubeId} />
+                  {youtubeId != undefined ? (
+                    <YoutubePlayer id={youtubeId} />
+                  ) : (
+                    <Loading />
+                  )}
                 </div>
               </div>
             </Carousel.Item>

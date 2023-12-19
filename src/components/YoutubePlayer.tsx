@@ -26,6 +26,7 @@ const YoutubeIconContainer = styled.span`
 
 const ThumbnailContainer = styled.div`
   position: relative;
+  height: 100%;
   cursor: pointer;
   filter: brightness(0.8);
   transition: all 0.2s cubic-bezier(0, 0, 0.2, 1) 0s;

@@ -26,7 +26,11 @@ const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [locationList, setLocationList] = useState<LocationData[]>([])
 
   useEffect(() => {
-    fetch('/contentfulEntries.json', {})
+    fetch('/contentfulEntries.json', {
+      headers: {
+        'Cache-Control': 'public, max-age=86400',
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setLocationList(normalizeEntryList(data))
