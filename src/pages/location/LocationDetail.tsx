@@ -332,7 +332,9 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
                       </Carousel>
                     ) : (
                       videoList.map(({ youtubeId }) => (
-                        <YoutubePlayer key={youtubeId} id={youtubeId} />
+                        <div key={youtubeId}>
+                          <YoutubePlayer id={youtubeId} />
+                        </div>
                       ))
                     )}
                   </ItemListContainer>

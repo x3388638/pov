@@ -79,6 +79,7 @@ const Gallery: FC<GalleryProps> = ({ selectedId, imageList }) => {
             height: '100%',
             width: '100%',
             objectFit: 'contain',
+            background: '#fafafa',
           }}
         />
       </MainImgContainer>
