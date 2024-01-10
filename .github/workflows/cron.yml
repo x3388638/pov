@@ -16,8 +16,6 @@ jobs:
           node-version: 20
       - name: Fetch Contentful data
         run: SPACE_ID=${{secrets.CONTENTFUL_SPACE_ID}} ACCESS_TOKEN=${{secrets.CONTENTFUL_ACCESS_TOKEN}} node ./contentful.js
-      - name: Update sitemap
-        run: node ./sitemap.js
       - name: Commit to GitHub
         run: |
           git config --global user.name "GitHub Actions"
