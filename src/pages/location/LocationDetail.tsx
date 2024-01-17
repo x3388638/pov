@@ -10,7 +10,6 @@ import {
   faMagnifyingGlassLocation,
 } from '@fortawesome/free-solid-svg-icons'
 import Carousel from 'react-grid-carousel'
-import { Map } from 'leaflet'
 
 import { useAppContext } from '@/providers/AppContextProvider'
 import { ItemType, LocationData } from '@/interfaces'
@@ -18,7 +17,7 @@ import Helmet from '@/components/Helmet'
 import Cover from '@/components/Cover'
 import YoutubePlayer from '@/components/YoutubePlayer'
 import Footer from '@/components/Footer'
-import { initMap, setMarker } from '@/utils/leaflet'
+import { LeafletMap } from '@/utils/leaflet'
 import { genBreadcrumb } from '@/utils/jsonLd'
 import Gallery from './Gallery'
 
@@ -220,17 +219,13 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
     }
 
     if (targetLocation) {
-      const map = initMap({
+      const map = new LeafletMap({
         eleId: 'LeafletMapContainer',
         zoom: 18,
         viewCenter: [targetLocation.location.lat, targetLocation.location.lng],
       })
 
-      setMarker(
-        map as Map,
-        targetLocation.location.lat,
-        targetLocation.location.lng
-      )
+      map.setMarker(targetLocation.location.lat, targetLocation.location.lng)
     }
   }, [targetLocation])
 

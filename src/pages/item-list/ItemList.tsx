@@ -8,7 +8,6 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Map, Marker } from 'leaflet'
 import debounce from 'lodash.debounce'
 
 import Cover from '@/components/Cover'
@@ -17,7 +16,7 @@ import Helmet from '@/components/Helmet'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { ItemType, LocationData } from '@/interfaces'
 import { genBreadcrumb } from '@/utils/jsonLd'
-import { initMap, setMarker } from '@/utils/leaflet'
+import { LeafletMap } from '@/utils/leaflet'
 import Filter from './Filter'
 import { ItemFilter } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
@@ -220,12 +219,11 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [filter, setFilter] = useState<ItemFilter>()
   const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
-  const mapRef = useRef<Map>()
-  const markerListRef = useRef<Marker[]>([])
+  const mapRef = useRef<LeafletMap>()
 
   // re-init map on type change
   useEffect(() => {
-    mapRef.current = initMap({ eleId: 'LeafletMapContainer' }) as Map
+    mapRef.current = new LeafletMap({ eleId: 'LeafletMapContainer' })
   }, [type])
 
   useEffect(() => {
@@ -278,32 +276,28 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     const { location } = filteredItemList[0] || {}
 
     if (location) {
-      mapRef.current?.flyTo([location.lat, location.lng], 8, { duration: 1 })
+      mapRef.current?.map.flyTo([location.lat, location.lng], 8, {
+        duration: 1,
+      })
     }
   }, [filteredItemList])
 
-  const clearMarkers = () => {
-    markerListRef.current.forEach((marker) => {
-      mapRef.current?.removeLayer(marker)
-    })
-
-    markerListRef.current = []
-  }
-
   const setMarkers = (list: LocationData[]) => {
     if (mapRef.current) {
-      clearMarkers()
+      mapRef.current.clearAllMarkers()
       list.forEach(({ location }) => {
         const { lat, lng, id, name } = location
-        markerListRef.current.push(
-          setMarker(mapRef.current!, lat, lng, {
-            content: renderToString(
-              <a href={`/#/p/${id}`} target="_blank">
-                {name} <FontAwesomeIcon icon={faUpRightFromSquare} />
-              </a>
-            ),
-          })
-        )
+
+        mapRef.current?.setMarker(lat, lng, {
+          content: renderToString(
+            <a
+              href={`/#/${type === 'photo' ? 'p' : 'v'}/${id}`}
+              target="_blank"
+            >
+              {name} <FontAwesomeIcon icon={faUpRightFromSquare} />
+            </a>
+          ),
+        })
       })
     }
   }
@@ -311,7 +305,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const focusToMarker = debounce((location: LocationData['location']) => {
     const { lat, lng } = location
 
-    mapRef.current?.flyTo([lat, lng], 16, { duration: 1 })
+    mapRef.current?.map.flyTo([lat, lng], 16, { duration: 1 })
   }, 500)
 
   const handleFilterChange = (list: string[], logic: 'AND' | 'OR') => {
