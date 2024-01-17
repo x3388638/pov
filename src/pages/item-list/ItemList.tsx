@@ -1,8 +1,15 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { renderToString } from 'react-dom/server'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { faPhotoFilm, faShuffle } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPhotoFilm,
+  faShuffle,
+  faUpRightFromSquare,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Map, Marker } from 'leaflet'
+import debounce from 'lodash.debounce'
 
 import Cover from '@/components/Cover'
 import Footer from '@/components/Footer'
@@ -10,6 +17,7 @@ import Helmet from '@/components/Helmet'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { ItemType, LocationData } from '@/interfaces'
 import { genBreadcrumb } from '@/utils/jsonLd'
+import { initMap, setMarker } from '@/utils/leaflet'
 import Filter from './Filter'
 import { ItemFilter } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
@@ -67,6 +75,30 @@ const ExploreBtn = styled.div`
   @media screen and (max-width: 768px) {
     font-size: 14px;
     padding: 4px 8px;
+  }
+`
+
+const MapPositionLayout = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+
+  @media screen and (max-width: 1300px) {
+    flex-direction: column;
+  }
+`
+
+const MapContainer = styled.div`
+  position: sticky;
+  top: 10vh;
+  width: 500px;
+  height: 80vh;
+  z-index: 2;
+
+  @media screen and (max-width: 1300px) {
+    width: 100%;
+    height: 30vh;
+    top: 0;
   }
 `
 
@@ -188,6 +220,13 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [filter, setFilter] = useState<ItemFilter>()
   const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
+  const mapRef = useRef<Map>()
+  const markerListRef = useRef<Marker[]>([])
+
+  // re-init map on type change
+  useEffect(() => {
+    mapRef.current = initMap({ eleId: 'LeafletMapContainer' }) as Map
+  }, [type])
 
   useEffect(() => {
     if (locationList.length) {
@@ -232,6 +271,49 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     setRevealedItemList(filteredItemList.slice(0, page * PAGE_ITEM_COUNT))
   }, [page, filteredItemList])
 
+  // when filters are changed, reset markers and fly to first location
+  useEffect(() => {
+    setMarkers(filteredItemList)
+
+    const { location } = filteredItemList[0] || {}
+
+    if (location) {
+      mapRef.current?.flyTo([location.lat, location.lng], 8, { duration: 1 })
+    }
+  }, [filteredItemList])
+
+  const clearMarkers = () => {
+    markerListRef.current.forEach((marker) => {
+      mapRef.current?.removeLayer(marker)
+    })
+
+    markerListRef.current = []
+  }
+
+  const setMarkers = (list: LocationData[]) => {
+    if (mapRef.current) {
+      clearMarkers()
+      list.forEach(({ location }) => {
+        const { lat, lng, id, name } = location
+        markerListRef.current.push(
+          setMarker(mapRef.current!, lat, lng, {
+            content: renderToString(
+              <a href={`/#/p/${id}`} target="_blank">
+                {name} <FontAwesomeIcon icon={faUpRightFromSquare} />
+              </a>
+            ),
+          })
+        )
+      })
+    }
+  }
+
+  const focusToMarker = debounce((location: LocationData['location']) => {
+    const { lat, lng } = location
+
+    mapRef.current?.flyTo([lat, lng], 16, { duration: 1 })
+  }, 500)
+
   const handleFilterChange = (list: string[], logic: 'AND' | 'OR') => {
     if (!list.length) {
       setFilter(undefined)
@@ -249,14 +331,17 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     }
   }, [revealedItemList, filteredItemList])
 
+  const handleSwitchType = () => {
+    window.scrollTo(0, 0)
+    navigate(`/${type === 'photo' ? 'v' : 'p'}`)
+  }
+
   return (
     <div css={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Helmet title={metaTitle} jsonLd={genBreadcrumb(2, type)} />
       <Cover />
       <Container key={type} maxWidth={containerMaxWidth}>
-        <ExploreBtn
-          onClick={() => navigate(`/${type === 'photo' ? 'v' : 'p'}`)}
-        >
+        <ExploreBtn onClick={handleSwitchType}>
           <FontAwesomeIcon icon={faShuffle} />
           <span>看{type === 'photo' ? '影片' : '照片'}</span>
         </ExploreBtn>
@@ -282,49 +367,65 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
         <div css={{ margin: '12px 0' }}>
           <Filter tagList={availableTagList} onSelect={handleFilterChange} />
         </div>
-        <div css={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {revealedItemList.map(({ location, videoList, photoList }) => (
-            <ItemContainer
-              key={location.id}
-              onClick={() => navigate(`/${type[0]}/${location.id}`)}
-            >
-              <div
-                css={{
-                  fontSize: '24px',
-                  fontWeight: 'bold',
-                  marginBottom: '8px',
-                }}
+        <MapPositionLayout>
+          <MapContainer>
+            <div
+              id="LeafletMapContainer"
+              style={{ height: '100%', width: '100%' }}
+            />
+          </MapContainer>
+          <div
+            css={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'column',
+              gap: '12px',
+            }}
+          >
+            {revealedItemList.map(({ location, videoList, photoList }) => (
+              <ItemContainer
+                key={location.id}
+                onClick={() => navigate(`/${type[0]}/${location.id}`)}
+                onMouseEnter={() => focusToMarker(location)}
               >
-                {location.name}
-              </div>
-              {type === 'photo' && (
-                <ThumbnailRail>
-                  {photoList.map(({ image }, i) => (
-                    <Thumbnail
-                      key={i}
-                      imgSrc={image}
-                      width={photoList.length > 1 ? '60%' : '100%'}
-                    />
-                  ))}
-                </ThumbnailRail>
-              )}
-              {type === 'video' && (
-                <div>
-                  {videoList.map(({ youtubeId }, i) => (
-                    <img
-                      key={i}
-                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                      width="100%"
-                    />
-                  ))}
+                <div
+                  css={{
+                    fontSize: '24px',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {location.name}
                 </div>
-              )}
-            </ItemContainer>
-          ))}
-          {!!revealedItemList.length && (
-            <InfiniteScrollTrigger onTrigger={loadNextPage} />
-          )}
-        </div>
+                {type === 'photo' && (
+                  <ThumbnailRail>
+                    {photoList.map(({ image }, i) => (
+                      <Thumbnail
+                        key={i}
+                        imgSrc={image}
+                        width={photoList.length > 1 ? '60%' : '100%'}
+                      />
+                    ))}
+                  </ThumbnailRail>
+                )}
+                {type === 'video' && (
+                  <div>
+                    {videoList.map(({ youtubeId }, i) => (
+                      <img
+                        key={i}
+                        src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                        width="100%"
+                      />
+                    ))}
+                  </div>
+                )}
+              </ItemContainer>
+            ))}
+            {!!revealedItemList.length && (
+              <InfiniteScrollTrigger onTrigger={loadNextPage} />
+            )}
+          </div>
+        </MapPositionLayout>
       </Container>
       <Footer />
     </div>
