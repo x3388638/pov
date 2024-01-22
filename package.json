@@ -13,7 +13,11 @@
     "prepare": "husky install",
     "contentful:fetch": "node ./public/contentful.js",
     "sitemap:update": "node ./public/sitemap.js",
-    "deploy": "npm run lint && npm run prettier:check && npm run build && gh-pages -d dist -b master -t"
+    "deploy": "npm run lint && npm run prettier:check && npm run build && gh-pages -d dist -b master -t",
+    "// next.js": "",
+    "build:next": "next build",
+    "dev:next": "next dev",
+    "start:next": "next start"
   },
   "repository": {
     "type": "git",
@@ -69,6 +73,7 @@
     "leaflet-gesture-handling": "^1.2.2",
     "lodash.debounce": "^4.0.8",
     "lodash.shuffle": "^4.2.0",
+    "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-carousel": "^1.0.1",
