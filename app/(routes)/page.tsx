@@ -1,6 +1,6 @@
 'use client'
 
-import Cover from './ui/cover'
+import Cover from '../components/cover'
 
 const Page = () => {
   return (
