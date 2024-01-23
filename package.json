@@ -79,7 +79,8 @@
     "react-grid-carousel": "^1.0.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.20.0",
-    "reset-css": "^5.0.2"
+    "reset-css": "^5.0.2",
+    "styled-components": "^6.1.8"
   },
   "lint-staged": {
     "*.{js,json,css}": [
