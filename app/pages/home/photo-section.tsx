@@ -1,13 +1,13 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from '@emotion/styled'
+import { useRouter } from 'next/navigation'
+import styled from 'styled-components'
 import shuffle from 'lodash.shuffle'
 
 import { LocationData, Photo } from '@/interfaces'
-import { useAppContext } from '@/providers/AppContextProvider'
+import { useAppContext } from '@/providers/app-context'
 import Loading from '@/components/loading'
-import { PHOTO_SECTION_ITEM_COUNT } from './constants'
-import MoreBtn from './MoreBtn'
+import { PHOTO_SECTION_ITEM_COUNT } from '@/constants'
+import MoreBtn from './more-btn'
 
 const Carousel = styled.div`
   display: flex;
@@ -72,7 +72,7 @@ const Image: FC<{ photo: Photo }> = ({ photo }) => {
   return (
     <div
       ref={placeholderRef}
-      css={{
+      style={{
         position: 'relative',
         height: '100%',
         aspectRatio: `${width}/${height}`,
@@ -83,7 +83,7 @@ const Image: FC<{ photo: Photo }> = ({ photo }) => {
         <img
           src={image}
           height="100%"
-          css={{ position: 'absolute', top: 0, left: 0 }}
+          style={{ position: 'absolute', top: 0, left: 0 }}
         />
       ) : (
         <Loading />
@@ -93,8 +93,8 @@ const Image: FC<{ photo: Photo }> = ({ photo }) => {
 }
 
 const PhotoSection: FC = () => {
-  const { locationList } = useAppContext()
-  const navigate = useNavigate()
+  const { locationList, setLocationPageTarget } = useAppContext()
+  const router = useRouter()
   const [photoList, setPhotoList] = useState<Photo[]>(
     [...Array(PHOTO_SECTION_ITEM_COUNT)].map(() => ({} as Photo))
   )
@@ -143,11 +143,12 @@ const PhotoSection: FC = () => {
       return
     }
 
-    navigate(`/p/${location.id}`, { state: { itemId: id } })
+    setLocationPageTarget(id)
+    router.push(`/p/${location.id}`)
   }
 
   return (
-    <div css={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }}>
       <Carousel>
         {photoList.map((photo, i) => (
           <ImgContainer key={i} onClick={() => handleClickImg(photo)}>
@@ -155,11 +156,7 @@ const PhotoSection: FC = () => {
           </ImgContainer>
         ))}
       </Carousel>
-      <MoreBtn
-        label="更多照片"
-        animationDelay={0.5}
-        onClick={() => navigate('/p')}
-      />
+      <MoreBtn label="更多照片" animationDelay={0.5} href="/p" />
     </div>
   )
 }

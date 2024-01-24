@@ -10,8 +10,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash.debounce'
 
-import Cover from '@/components/Cover'
-import Footer from '@/components/Footer'
+import Cover from '@/components/cover'
+import Footer from '@/components/footer'
 import Helmet from '@/components/Helmet'
 import { useAppContext } from '@/providers/AppContextProvider'
 import { ItemType, LocationData } from '@/interfaces'

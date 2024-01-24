@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Carousel from 'react-grid-carousel'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 import shuffle from 'lodash.shuffle'
-import { useNavigate } from 'react-router-dom'
 
-import { useAppContext } from '@/providers/AppContextProvider'
+import { useAppContext } from '@/providers/app-context'
 import { LocationData, Video } from '@/interfaces'
-import { VIDEO_SECTION_ITEM_COUNT } from './constants'
-import YoutubePlayer from '@/components/YoutubePlayer'
+import { VIDEO_SECTION_ITEM_COUNT } from '@/constants'
+import YoutubePlayer from '@/components/youtube-player'
 import Loading from '@/components/loading'
-import MoreBtn from './MoreBtn'
+import MoreBtn from './more-btn'
 
 const Container = styled.div`
   position: relative;
@@ -30,7 +30,7 @@ const CarouselContainer = styled.div`
 
 const VideoSection: FC = () => {
   const { locationList } = useAppContext()
-  const navigate = useNavigate()
+  const router = useRouter()
   const [videoList, setVideoList] = useState<Video[]>(
     [...Array(VIDEO_SECTION_ITEM_COUNT)].map(() => ({} as Video))
   )
@@ -91,14 +91,14 @@ const VideoSection: FC = () => {
           {videoList.map(({ youtubeId }, i) => (
             <Carousel.Item key={i}>
               <div
-                css={{
+                style={{
                   position: 'relative',
                   paddingTop: '56.25%',
                   background: '#888',
                 }}
               >
                 <div
-                  css={{
+                  style={{
                     position: 'absolute',
                     left: '0',
                     top: '0',
@@ -117,11 +117,7 @@ const VideoSection: FC = () => {
           ))}
         </Carousel>
       </CarouselContainer>
-      <MoreBtn
-        label="更多影片"
-        animationDelay={1.5}
-        onClick={() => navigate('/v')}
-      />
+      <MoreBtn label="更多影片" animationDelay={1.5} href="/v" />
     </Container>
   )
 }

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import coverImg from '@/public/images/cover.jpg'
-import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from '@/app/constants'
+import coverImg from '@public/images/cover.jpg'
+import { SOCIAL_MEDIA_LIST, SocialMediaInfo } from '@/constants'
 
 const CoverBackground = styled.div`
   height: 100%;
@@ -49,7 +49,7 @@ const Header = styled.h1`
 `
 
 const HashTag = styled.span`
-  ::before {
+  &::before {
     content: '#';
   }
 `

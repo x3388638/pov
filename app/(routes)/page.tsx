@@ -1,18 +1,7 @@
-'use client'
-
-import Cover from '../components/cover'
+import HomePage from '@/pages/home'
 
 const Page = () => {
-  return (
-    <div>
-      {/* <Helmet /> */}
-      <Cover />
-      {/* <PhotoSection />
-      <VideoSection />
-      <MapSection />
-      <Footer /> */}
-    </div>
-  )
+  return <HomePage />
 }
 
 export default Page

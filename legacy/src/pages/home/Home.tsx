@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import Cover from '@/components/Cover'
-import Footer from '@/components/Footer'
+import Cover from '@/components/cover'
+import Footer from '@/components/footer'
 import Helmet from '@/components/Helmet'
 import PhotoSection from './PhotoSection'
 import VideoSection from './VideoSection'

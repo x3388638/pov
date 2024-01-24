@@ -1,9 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import Cover from '@/components/Cover'
-import Footer from '@/components/Footer'
-import Loading from '@/components/Loading'
+import Cover from '@/components/cover'
+import Footer from '@/components/footer'
+import Loading from '@/components/loading'
 import { useAppContext } from '@/providers/AppContextProvider'
 import Helmet from '@/components/Helmet'
 import { LocationData } from '@/interfaces'
