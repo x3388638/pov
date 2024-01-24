@@ -1,5 +1,7 @@
+import ItemList from '@/pages/item-list'
+
 const Page = () => {
-  return <div>listing photo</div>
+  return <ItemList type="photo" />
 }
 
 export default Page

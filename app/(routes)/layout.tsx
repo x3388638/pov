@@ -15,6 +15,8 @@ import Footer from '@/components/footer'
 
 // FIXME: font; global style
 
+// FIXME: clean package.json
+
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <html>
