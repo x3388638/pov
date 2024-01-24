@@ -329,13 +329,31 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
                       >
                         {videoList.map(({ youtubeId }) => (
                           <Carousel.Item key={youtubeId}>
-                            <YoutubePlayer id={youtubeId} />
+                            <div
+                              style={{
+                                position: 'relative',
+                                paddingTop: '56.25%',
+                                background: '#888',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  left: '0',
+                                  top: '0',
+                                  height: '100%',
+                                  width: '100%',
+                                }}
+                              >
+                                <YoutubePlayer id={youtubeId} />
+                              </div>
+                            </div>
                           </Carousel.Item>
                         ))}
                       </Carousel>
                     ) : (
                       videoList.map(({ youtubeId }) => (
-                        <div key={youtubeId}>
+                        <div key={youtubeId} style={{ aspectRatio: '16 / 9' }}>
                           <YoutubePlayer id={youtubeId} />
                         </div>
                       ))

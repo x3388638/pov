@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Carousel from 'react-grid-carousel'
 import styled from 'styled-components'
 import shuffle from 'lodash.shuffle'
@@ -30,7 +29,6 @@ const CarouselContainer = styled.div`
 
 const VideoSection: FC = () => {
   const { locationList } = useAppContext()
-  const router = useRouter()
   const [videoList, setVideoList] = useState<Video[]>(
     [...Array(VIDEO_SECTION_ITEM_COUNT)].map(() => ({} as Video))
   )

@@ -19,7 +19,7 @@ export const genBreadcrumb = (
         '@type': 'ListItem',
         position: 2,
         name: type === 'photo' ? '照片列表' : '影片列表',
-        item: `${location.origin}/#/${type[0]}`,
+        item: `${location.origin}/${type[0]}`,
       },
       {
         '@type': 'ListItem',

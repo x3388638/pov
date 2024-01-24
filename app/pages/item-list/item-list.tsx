@@ -293,10 +293,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
 
         mapRef.current?.setMarker(lat, lng, {
           content: renderToString(
-            <a
-              href={`/#/${type === 'photo' ? 'p' : 'v'}/${id}`}
-              target="_blank"
-            >
+            <a href={`/${type === 'photo' ? 'p' : 'v'}/${id}`} target="_blank">
               {name} <FontAwesomeIcon icon={faUpRightFromSquare} />
             </a>
           ),
