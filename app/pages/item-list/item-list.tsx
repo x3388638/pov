@@ -225,7 +225,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   // re-init map on type change
   useEffect(() => {
     if (!mapRef.current) {
-      // FIXME: check type change
       mapRef.current = new LeafletMap({ eleId: 'LeafletMapContainer' })
     }
   }, [type])

@@ -1,9 +1,7 @@
-import { FC } from 'react'
+import LocationDetail from '@/pages/location-detail'
 
-const Page: FC<{ params: { locationId?: string } }> = ({
-  params: { locationId },
-}) => {
-  return <div>video location {locationId}</div>
+const Page = () => {
+  return <LocationDetail type="video" />
 }
 
 export default Page

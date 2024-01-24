@@ -1,19 +1,7 @@
-'use client'
+import LocationDetail from '@/pages/location-detail'
 
-import { FC } from 'react'
-
-import { useAppContext } from '@/providers/app-context'
-
-const Page: FC<{ params: { locationId?: string } }> = ({
-  params: { locationId },
-}) => {
-  const { locationPageTarget } = useAppContext()
-
-  return (
-    <div>
-      photo; id: {locationId}; target: {locationPageTarget}
-    </div>
-  )
+const Page = () => {
+  return <LocationDetail type="photo" />
 }
 
 export default Page

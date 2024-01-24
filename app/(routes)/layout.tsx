@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, ReactNode } from 'react'
+import Script from 'next/script'
 import 'reset-css'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
@@ -16,6 +17,10 @@ import Footer from '@/components/footer'
 // FIXME: font; global style
 
 // FIXME: clean package.json
+
+// FIXME: GA
+
+// FIXME: meta tags
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -36,6 +41,10 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
             </div>
           </AppContextProvider>
         </StyledComponentsRegistry>
+        <Script
+          strategy="lazyOnload"
+          src="https://www.youtube.com/iframe_api"
+        />
       </body>
     </html>
   )
