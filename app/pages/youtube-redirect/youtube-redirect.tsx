@@ -10,6 +10,7 @@ import { useAppContext } from '@/providers/app-context'
 
 // FIXME: no index?
 import { LocationData } from '@/interfaces'
+import { getLocationAndYoutubeIdByRedirectId } from '@/utils/contentful'
 
 const YoutubeRedirect: FC = () => {
   const { id = '' } = useParams()
@@ -38,22 +39,11 @@ const YoutubeRedirect: FC = () => {
 
   useEffect(() => {
     if (locationList?.length && id) {
-      let result = null
-      const location = locationList.find(({ videoList }) => {
-        const targetVideo = (videoList || []).find(
-          ({ redirectId }) => String(redirectId) === id
-        )
-
-        if (targetVideo) {
-          result = targetVideo.youtubeId
-          return true
-        }
-
-        return false
-      })
+      const { location, youtubeId = null } =
+        getLocationAndYoutubeIdByRedirectId(locationList, id as string)
 
       setTargetLocation(location)
-      setYoutubeId(result)
+      setYoutubeId(youtubeId)
     }
   }, [locationList, id])
 

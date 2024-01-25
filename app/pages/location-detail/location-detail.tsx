@@ -20,6 +20,7 @@ import { ItemType, LocationData } from '@/interfaces'
 import YoutubePlayer from '@/components/youtube-player'
 import { LeafletMap } from '@/utils/leaflet'
 import { genBreadcrumb } from '@/utils/jsonLd'
+import { getLocationById } from '@/utils/contentful'
 import Gallery from './gallery'
 
 const Container = styled.div`
@@ -208,9 +209,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
 
   useEffect(() => {
     if (locationId && locationList.length) {
-      const target = locationList.find(
-        (data) => data.location.id === locationId
-      )
+      const target = getLocationById(locationList, locationId as string)
       setTargetLocation(target || null)
     }
   }, [locationId, locationList])

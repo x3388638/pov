@@ -7,12 +7,13 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
+  useMemo,
   useState,
 } from 'react'
 
 import { LocationData } from '@/interfaces'
 import { normalizeEntryList } from '@/utils/contentful'
+import contentfulEntries from '@public/contentfulEntries.json'
 
 interface AppContext {
   locationList: LocationData[]
@@ -29,20 +30,11 @@ export const useAppContext = () => {
 const { Provider } = ctx
 
 export const AppContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [locationList, setLocationList] = useState<LocationData[]>([])
+  const locationList = useMemo<LocationData[]>(
+    () => normalizeEntryList(contentfulEntries as any),
+    []
+  )
   const [locationPageTarget, setLocationPageTarget] = useState<string>()
-
-  useEffect(() => {
-    fetch('/contentfulEntries.json', {
-      headers: {
-        'Cache-Control': 'public, max-age=86400',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLocationList(normalizeEntryList(data))
-      })
-  }, [])
 
   return (
     <Provider

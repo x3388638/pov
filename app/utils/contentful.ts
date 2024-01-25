@@ -189,3 +189,31 @@ const groupByContentType = (
     locationMap,
   }
 }
+
+export const getLocationById = (locationList: LocationData[], id: string) => {
+  return locationList.find((location) => location.location.id === id)
+}
+
+export const getLocationAndYoutubeIdByRedirectId = (
+  locationList: LocationData[],
+  id: string
+) => {
+  let youtubeId = undefined
+  const location = locationList.find(({ videoList }) => {
+    const targetVideo = (videoList || []).find(
+      ({ redirectId }) => String(redirectId) === id
+    )
+
+    if (targetVideo) {
+      youtubeId = targetVideo.youtubeId
+      return true
+    }
+
+    return false
+  })
+
+  return {
+    location,
+    youtubeId,
+  }
+}
