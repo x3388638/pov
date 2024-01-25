@@ -10,7 +10,6 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import debounce from 'lodash.debounce'
 
 import { useAppContext } from '@/providers/app-context'
 import { ItemType, LocationData } from '@/interfaces'

@@ -2,6 +2,7 @@
 
 import { FC, ReactNode } from 'react'
 import Script from 'next/script'
+import localFont from 'next/font/local'
 import 'reset-css'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
@@ -14,9 +15,13 @@ import AppContextProvider from '@/providers/app-context'
 import Cover from '@/components/cover'
 import Footer from '@/components/footer'
 
-// FIXME: font; global style
+// FIXME: window error leaflet
 
-// FIXME: clean package.json
+// FIXME: script for fetch contentful, sitemap
+
+// FIXME: check github action
+
+// FIXME: backup dev branch
 
 // FIXME: GA
 
@@ -26,9 +31,13 @@ import Footer from '@/components/footer'
 
 // FIXME: readme
 
+const myFont = localFont({
+  src: '../../public/fonts/huninn.ttf',
+})
+
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <html>
+    <html className={myFont.className}>
       <body>
         <StyledComponentsRegistry>
           <AppContextProvider>
