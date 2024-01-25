@@ -5,11 +5,6 @@ import { useRouter, useParams } from 'next/navigation'
 
 import Loading from '@/components/loading'
 import { useAppContext } from '@/providers/app-context'
-// FIXME:
-// import Helmet from '@/components/Helmet'
-
-// FIXME: no index?
-import { LocationData } from '@/interfaces'
 import { getLocationAndYoutubeIdByRedirectId } from '@/utils/contentful'
 
 const YoutubeRedirect: FC = () => {
@@ -19,16 +14,6 @@ const YoutubeRedirect: FC = () => {
   const [youtubeId, setYoutubeId] = useState<string | null | undefined>(
     undefined
   )
-  const [targetLocation, setTargetLocation] = useState<LocationData>()
-  // FIXME:
-  const metaTitle = useMemo(() => {
-    const locationName = targetLocation?.location?.name
-    if (!locationName) {
-      return undefined
-    }
-
-    return `前往 YouTube 觀看 ${locationName} 影片`
-  }, [targetLocation])
   const coverImg = useMemo(() => {
     if (!youtubeId) {
       return undefined
@@ -39,10 +24,11 @@ const YoutubeRedirect: FC = () => {
 
   useEffect(() => {
     if (locationList?.length && id) {
-      const { location, youtubeId = null } =
-        getLocationAndYoutubeIdByRedirectId(locationList, id as string)
+      const { youtubeId = null } = getLocationAndYoutubeIdByRedirectId(
+        locationList,
+        id as string
+      )
 
-      setTargetLocation(location)
       setYoutubeId(youtubeId)
     }
   }, [locationList, id])
@@ -60,9 +46,6 @@ const YoutubeRedirect: FC = () => {
 
   return (
     <>
-      {/* // FIXME: */}
-      {/* <Helmet title={metaTitle} image={coverImg} /> */}
-
       {youtubeId && (
         <div
           style={{

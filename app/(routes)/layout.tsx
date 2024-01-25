@@ -20,7 +20,7 @@ import Footer from '@/components/footer'
 
 // FIXME: GA
 
-// FIXME: meta tags
+// FIXME: error page
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (

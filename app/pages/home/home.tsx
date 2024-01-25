@@ -7,8 +7,6 @@ import MapSection from './map-section'
 const Home = () => {
   return (
     <>
-      {/* FIXME: */}
-      {/* <Helmet /> */}
       <PhotoSection />
       <VideoSection />
       <MapSection />

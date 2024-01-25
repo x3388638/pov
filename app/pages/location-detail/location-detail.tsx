@@ -15,11 +15,8 @@ import Carousel from 'react-grid-carousel'
 
 import { useAppContext } from '@/providers/app-context'
 import { ItemType, LocationData } from '@/interfaces'
-// FIXME:
-// import Helmet from '@/components/Helmet'
 import YoutubePlayer from '@/components/youtube-player'
 import { LeafletMap } from '@/utils/leaflet'
-import { genBreadcrumb } from '@/utils/jsonLd'
 import { getLocationById } from '@/utils/contentful'
 import Gallery from './gallery'
 
@@ -161,51 +158,6 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
   const videoList = useMemo(() => {
     return (targetLocation?.videoList || []).sort(sortItemDate)
   }, [targetLocation])
-
-  // FIXME:
-  const metaTitle = useMemo(() => {
-    const locationName = targetLocation?.location.name
-
-    if (!locationName) {
-      return undefined
-    }
-
-    let title = locationName
-
-    if (type === 'photo') {
-      title += '|車拍|解任務|拍車景點'
-    } else {
-      title += '|停車場導覽|第一人稱開車視角影片|路線導覽|POV Drive'
-    }
-
-    return title
-  }, [targetLocation, type])
-
-  // FIXME:
-  const metaImage = useMemo(() => {
-    let img = undefined
-    if (type === 'photo') {
-      const image = photoList?.[0]?.image
-      img = image ? `https:${image}` : undefined
-    } else {
-      const id = videoList?.[0]?.youtubeId || undefined
-      img = id
-        ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
-        : undefined
-    }
-
-    return img
-  }, [photoList, videoList, type])
-
-  // FIXME:
-  const jsonLd = useMemo(() => {
-    const locationName = targetLocation?.location?.name
-    if (!locationName) {
-      return undefined
-    }
-
-    return genBreadcrumb(3, type, locationName)
-  }, [type, targetLocation])
 
   useEffect(() => {
     if (locationId && locationList.length) {

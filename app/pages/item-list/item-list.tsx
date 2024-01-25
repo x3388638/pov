@@ -12,9 +12,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash.debounce'
 
-// FIXME:
-// import Helmet from '@/components/Helmet'
-// import { genBreadcrumb } from '@/utils/jsonLd'
 import { useAppContext } from '@/providers/app-context'
 import { ItemType, LocationData } from '@/interfaces'
 import { LeafletMap } from '@/utils/leaflet'
@@ -332,8 +329,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
 
   return (
     <Container key={type} $maxWidth={containerMaxWidth}>
-      {/* // FIXME: */}
-      {/* <Helmet title={metaTitle} jsonLd={genBreadcrumb(2, type)} /> */}
       <ExploreBtn onClick={handleSwitchType}>
         <FontAwesomeIcon icon={faShuffle} />
         <span>看{type === 'photo' ? '影片' : '照片'}</span>

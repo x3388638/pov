@@ -37,7 +37,7 @@ export const genMetadata = (
   id?: string,
   opts?: { locationName?: string; youtubeId?: string }
 ): Metadata => {
-  let title, description, ogImg, canonical
+  let title, description, ogImg, canonical, noindex
 
   switch (page) {
     case 'PhotoList': {
@@ -84,6 +84,7 @@ export const genMetadata = (
         }
 
         canonical = `https://pov.tw/y/${id}`
+        noindex = true
       }
 
       break
@@ -107,5 +108,6 @@ export const genMetadata = (
       ...DEFAULT_METADATA.alternates,
       ...(canonical && { canonical }),
     },
+    ...(noindex && { robots: { index: false } }),
   }
 }
