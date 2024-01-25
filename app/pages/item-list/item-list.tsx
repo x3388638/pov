@@ -218,6 +218,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
   const mapRef = useRef<LeafletMap>()
+  const mouseEnterTimeoutRef = useRef<number>()
 
   // re-init map on type change
   useEffect(() => {
@@ -299,11 +300,13 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     }
   }
 
-  const focusToMarker = debounce((location: LocationData['location']) => {
-    const { lat, lng } = location
-
-    mapRef.current?.map.flyTo([lat, lng], 16, { duration: 1 })
-  }, 500)
+  const focusToMarker = (location: LocationData['location']) => {
+    clearTimeout(mouseEnterTimeoutRef.current)
+    mouseEnterTimeoutRef.current = window.setTimeout(() => {
+      const { lat, lng } = location
+      mapRef.current?.map.flyTo([lat, lng], 16, { duration: 1 })
+    }, 1500)
+  }
 
   const handleFilterChange = (list: string[], logic: 'AND' | 'OR') => {
     if (!list.length) {
@@ -374,8 +377,8 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
             <ItemContainer
               key={location.id}
               onClick={() => router.push(`/${type[0]}/${location.id}`)}
-              // FIXME: enter more then 2s
               onMouseEnter={() => focusToMarker(location)}
+              onMouseLeave={() => clearTimeout(mouseEnterTimeoutRef.current)}
             >
               <div
                 style={{

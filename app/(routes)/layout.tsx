@@ -22,6 +22,10 @@ import Footer from '@/components/footer'
 
 // FIXME: error page
 
+// FIXME: remove legacy code
+
+// FIXME: readme
+
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <html>
