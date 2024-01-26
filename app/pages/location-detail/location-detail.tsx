@@ -1,7 +1,8 @@
 'use client'
 
-import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -16,9 +17,11 @@ import Carousel from 'react-grid-carousel'
 import { useAppContext } from '@/providers/app-context'
 import { ItemType, LocationData } from '@/interfaces'
 import YoutubePlayer from '@/components/youtube-player'
-import { LeafletMap } from '@/utils/leaflet'
 import { getLocationById } from '@/utils/contentful'
 import Gallery from './gallery'
+const MapSection = dynamic(() => import('./map-section'), {
+  ssr: false,
+})
 
 const Container = styled.div`
   max-width: 1500px;
@@ -149,7 +152,6 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
   const [targetLocation, setTargetLocation] = useState<
     LocationData | undefined | null
   >(undefined)
-  const mapRef = useRef<LeafletMap>()
 
   const photoList = useMemo(() => {
     return (targetLocation?.photoList || []).sort(sortItemDate)
@@ -170,24 +172,6 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
     if (targetLocation === null) {
       alert('Page not found.')
       router.push('/')
-    }
-
-    if (targetLocation) {
-      if (!mapRef.current) {
-        mapRef.current = new LeafletMap({
-          eleId: 'LeafletMapContainer',
-          zoom: 18,
-          viewCenter: [
-            targetLocation.location.lat,
-            targetLocation.location.lng,
-          ],
-        })
-      }
-
-      mapRef.current.setMarker(
-        targetLocation.location.lat,
-        targetLocation.location.lng
-      )
     }
   }, [targetLocation])
 
@@ -338,10 +322,7 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
                   更多影片
                 </ExploreBtn>
               </ExploreBtnContainer>
-              <div
-                id="LeafletMapContainer"
-                style={{ height: '100%', width: '100%' }}
-              />
+              <MapSection targetLocation={targetLocation} />
             </MapContainer>
           </MapPositionStyle>
         </Container>

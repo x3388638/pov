@@ -1,14 +1,9 @@
 'use client'
 
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { renderToString } from 'react-dom/server'
 import { useRouter } from 'next/navigation'
 import styled from 'styled-components'
-import {
-  faPhotoFilm,
-  faShuffle,
-  faUpRightFromSquare,
-} from '@fortawesome/free-solid-svg-icons'
+import { faPhotoFilm, faShuffle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useAppContext } from '@/providers/app-context'
@@ -18,6 +13,7 @@ import Filter from './filter'
 import { ItemFilter } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
 import { filterItemList } from './utils'
+import MapSection from './map-section'
 
 const Container = styled.div<{ $maxWidth: string }>`
   box-sizing: border-box;
@@ -219,13 +215,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const mapRef = useRef<LeafletMap>()
   const mouseEnterTimeoutRef = useRef<number>()
 
-  // re-init map on type change
-  useEffect(() => {
-    if (!mapRef.current) {
-      mapRef.current = new LeafletMap({ eleId: 'LeafletMapContainer' })
-    }
-  }, [type])
-
   useEffect(() => {
     if (locationList.length) {
       const list: LocationData[] = []
@@ -268,36 +257,6 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   useEffect(() => {
     setRevealedItemList(filteredItemList.slice(0, page * PAGE_ITEM_COUNT))
   }, [page, filteredItemList])
-
-  // when filters are changed, reset markers and fly to first location
-  useEffect(() => {
-    setMarkers(filteredItemList)
-
-    const { location } = filteredItemList[0] || {}
-
-    if (location) {
-      mapRef.current?.map.flyTo([location.lat, location.lng], 8, {
-        duration: 1,
-      })
-    }
-  }, [filteredItemList])
-
-  const setMarkers = (list: LocationData[]) => {
-    if (mapRef.current) {
-      mapRef.current.clearAllMarkers()
-      list.forEach(({ location }) => {
-        const { lat, lng, id, name } = location
-
-        mapRef.current?.setMarker(lat, lng, {
-          content: renderToString(
-            <a href={`/${type === 'photo' ? 'p' : 'v'}/${id}`} target="_blank">
-              {name} <FontAwesomeIcon icon={faUpRightFromSquare} />
-            </a>
-          ),
-        })
-      })
-    }
-  }
 
   const focusToMarker = (location: LocationData['location']) => {
     clearTimeout(mouseEnterTimeoutRef.current)
@@ -359,9 +318,10 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
       </div>
       <MapPositionLayout>
         <MapContainer>
-          <div
-            id="LeafletMapContainer"
-            style={{ height: '100%', width: '100%' }}
+          <MapSection
+            locationList={filteredItemList}
+            type={type}
+            ref={mapRef}
           />
         </MapContainer>
         <div

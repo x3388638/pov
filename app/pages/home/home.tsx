@@ -1,8 +1,12 @@
 'use client'
 
+import dynamic from 'next/dynamic'
+
 import PhotoSection from './photo-section'
 import VideoSection from './video-section'
-import MapSection from './map-section'
+const MapSection = dynamic(() => import('./map-section'), {
+  ssr: false,
+})
 
 const Home = () => {
   return (
