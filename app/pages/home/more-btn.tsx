@@ -56,16 +56,9 @@ const Container = styled(Link)<{ $animationDelay: number }>`
   }
 
   @media screen and (max-width: 480px) {
-    position: relative;
-    width: 100%;
-    padding: 8px 50px;
-    justify-content: center;
-    box-sizing: border-box;
-    box-shadow: unset;
-    animation: unset;
-    opacity: 1;
-    right: unset;
-    bottom: unset;
+    padding: 5px 10px;
+    font-size: 12px;
+    bottom: -5px;
   }
 `
 

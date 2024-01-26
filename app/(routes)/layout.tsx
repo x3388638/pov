@@ -15,8 +15,6 @@ import AppContextProvider from '@/providers/app-context'
 import Cover from '@/components/cover'
 import Footer from '@/components/footer'
 
-// FIXME: home page style: padding
-
 // FIXME: script for fetch contentful, sitemap
 
 // FIXME: check github action

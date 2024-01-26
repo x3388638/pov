@@ -9,6 +9,8 @@ import { LeafletMap } from '@/utils/leaflet'
 const Container = styled.div`
   padding: 10px 20px;
   background: #fff;
+  position: relative;
+  z-index: 0;
 
   @media screen and (max-width: 480px) {
     padding: 0;

@@ -12,8 +12,6 @@ import MoreBtn from './more-btn'
 
 const Container = styled.div`
   position: relative;
-  background: #f3f3f3;
-  padding: 10px 0;
 
   @media screen and (max-width: 480px) {
     padding: 0;
@@ -21,6 +19,8 @@ const Container = styled.div`
 `
 
 const CarouselContainer = styled.div`
+  overflow: hidden;
+
   @media screen and (max-width: 900px) {
     max-width: calc(100vh / 9 * 16);
     margin: 0 auto;
@@ -76,6 +76,10 @@ const VideoSection: FC = () => {
           mobileBreakpoint={768}
           loop
           responsiveLayout={[
+            {
+              breakpoint: 480,
+              gap: '0',
+            },
             {
               breakpoint: 900,
               cols: 1,
