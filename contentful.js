@@ -33,7 +33,7 @@ const exec = () => {
   getEntries()
     .then(() => {
       fs.writeFileSync(
-        path.resolve(__dirname, FILE_NAME),
+        path.resolve(__dirname, 'app', '_assets', FILE_NAME),
         JSON.stringify(entries)
       )
       console.log(`Contentful data updated in ${FILE_NAME}`)

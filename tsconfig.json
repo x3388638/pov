@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./app/*"],
-      "@public/*": ["./public/*"]
+      "@assets/*": ["./app/_assets/*"]
     }
   },
   "include": [

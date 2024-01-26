@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 import ogImg from '../opengraph-image.jpg'
-import ogImgPhotoList from '@public/images/ogimg-photo-list.jpg'
-import ogImgVideoList from '@public/images/ogimg-video-list.png'
+import ogImgPhotoList from '@assets/images/ogimg-photo-list.jpg'
+import ogImgVideoList from '@assets/images/ogimg-video-list.png'
 
 type Page =
   | 'Home'

@@ -6,7 +6,7 @@ import {
   getLocationAndYoutubeIdByRedirectId,
   normalizeEntryList,
 } from '@/utils/contentful'
-import contentfulEntries from '@public/contentfulEntries.json'
+import contentfulEntries from '@assets/contentfulEntries.json'
 
 const locationList = normalizeEntryList(contentfulEntries as any)
 

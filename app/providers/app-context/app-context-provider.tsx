@@ -13,7 +13,7 @@ import {
 
 import { LocationData } from '@/interfaces'
 import { normalizeEntryList } from '@/utils/contentful'
-import contentfulEntries from '@public/contentfulEntries.json'
+import contentfulEntries from '@assets/contentfulEntries.json'
 
 interface AppContext {
   locationList: LocationData[]

@@ -4,7 +4,7 @@ import LocationDetail from '@/pages/location-detail'
 import { genMetadata } from '@/utils/metadata'
 import { genBreadcrumb } from '@/utils/jsonLd'
 import { getLocationById, normalizeEntryList } from '@/utils/contentful'
-import contentfulEntries from '@public/contentfulEntries.json'
+import contentfulEntries from '@assets/contentfulEntries.json'
 
 const locationList = normalizeEntryList(contentfulEntries as any)
 

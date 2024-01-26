@@ -15,22 +15,16 @@ import AppContextProvider from '@/providers/app-context'
 import Cover from '@/components/cover'
 import Footer from '@/components/footer'
 
-// FIXME: script for fetch contentful, sitemap
-
-// FIXME: check github action
-
-// FIXME: backup dev branch
+// FIXME: check github action (to be checked)
 
 // FIXME: GA
-
-// FIXME: error page
 
 // FIXME: remove legacy code
 
 // FIXME: readme
 
 const myFont = localFont({
-  src: '../../public/fonts/huninn.ttf',
+  src: '../_assets/fonts/huninn.ttf',
 })
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {

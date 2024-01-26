@@ -9,8 +9,8 @@
     "prettier:check": "prettier --check './**/*.{js,json,css}'",
     "prettier:write": "prettier --write './**/*.{js,json,css}'",
     "prepare": "husky install",
-    "contentful:fetch": "node ./public/contentful.js",
-    "sitemap:update": "node ./public/sitemap.js",
+    "contentful:fetch": "node ./contentful.js",
+    "sitemap:update": "node ./sitemap.js",
     "build": "next build",
     "dev": "next dev",
     "start": "next start"
