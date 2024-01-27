@@ -17,6 +17,8 @@ import Footer from '@/components/footer'
 
 // FIXME: check github action (to be checked)
 
+// FIXME: resume json-ld & metatags
+
 // FIXME: GA
 
 // FIXME: remove legacy code

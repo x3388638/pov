@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import ogImg from '../opengraph-image.jpg'
 import ogImgPhotoList from '@assets/images/ogimg-photo-list.jpg'
-import ogImgVideoList from '@assets/images/ogimg-video-list.png'
+import ogImgVideoList from '@assets/images/ogimg-video-list.jpg'
 
 type Page =
   | 'Home'
@@ -37,6 +37,9 @@ export const genMetadata = (
   id?: string,
   opts?: { locationName?: string; youtubeId?: string }
 ): Metadata => {
+  // FIXME
+  return {}
+
   let title, description, ogImg, canonical, noindex
 
   switch (page) {
