@@ -18,8 +18,6 @@ import Footer from '@/components/footer'
 
 // FIXME: check github action (to be checked)
 
-// FIXME: readme
-
 const myFont = localFont({
   src: '../_assets/fonts/huninn.ttf',
 })

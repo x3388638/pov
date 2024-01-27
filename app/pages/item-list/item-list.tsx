@@ -336,6 +336,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
             <ItemContainer
               key={location.id}
               onClick={() => router.push(`/${type[0]}/${location.id}`)}
+              // FIXME: no working on prod
               onMouseEnter={() => focusToMarker(location)}
               onMouseLeave={() => clearTimeout(mouseEnterTimeoutRef.current)}
             >
