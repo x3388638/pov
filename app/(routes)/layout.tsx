@@ -3,6 +3,7 @@
 import { FC, ReactNode } from 'react'
 import Script from 'next/script'
 import localFont from 'next/font/local'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import 'reset-css'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
@@ -16,12 +17,6 @@ import Cover from '@/components/cover'
 import Footer from '@/components/footer'
 
 // FIXME: check github action (to be checked)
-
-// FIXME: resume json-ld & metatags
-
-// FIXME: GA
-
-// FIXME: remove legacy code
 
 // FIXME: readme
 
@@ -52,6 +47,7 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
           strategy="lazyOnload"
           src="https://www.youtube.com/iframe_api"
         />
+        <GoogleAnalytics gaId="G-2J7BK20P5Q" />
       </body>
     </html>
   )
