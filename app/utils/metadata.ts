@@ -63,6 +63,7 @@ export const genMetadata = (
           title = `${opts.locationName}|拍車景點|停車場導覽|解任務|公路美景|第一人稱視角`
         }
 
+        ogImg = 'https://pov.tw/ogimg-location.jpg'
         canonical = `https://pov.tw/p/${id}`
       }
 
