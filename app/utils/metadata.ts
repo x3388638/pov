@@ -1,9 +1,5 @@
 import type { Metadata } from 'next'
 
-import ogImg from '../opengraph-image.jpg'
-import ogImgPhotoList from '@assets/images/ogimg-photo-list.jpg'
-import ogImgVideoList from '@assets/images/ogimg-video-list.jpg'
-
 type Page =
   | 'Home'
   | 'PhotoList'
@@ -22,7 +18,7 @@ const DEFAULT_METADATA = {
     description:
       '搜集全台灣台北、台中、宜蘭、澎湖等各地解任務拍車景點，分享美麗風景；提供第一人稱視角的開車影片導覽各景點、停車場進出動線及內部動線，或是搭配輕鬆音樂一起徜徉在公路美景之中',
     images: {
-      url: ogImg.src,
+      url: 'https://pov.tw/ogimg.jpg',
       height: 630,
       width: 1200,
     },
@@ -44,7 +40,7 @@ export const genMetadata = (
       title = '全台拍車景點列表|解任務清單|美景地圖|停車場導覽'
       description =
         '搜集全台灣各地台北、台中、南投、高雄、宜蘭、花蓮、台東、澎湖等各地解任務拍車景點，分享美麗風景'
-      ogImg = ogImgPhotoList.src
+      ogImg = 'https://pov.tw/ogimg-photo-list.jpg'
       canonical = 'https://pov.tw/p'
 
       break
@@ -55,7 +51,7 @@ export const genMetadata = (
         '第一人稱開車視角|地獄停車場|賣場停車場導覽|汽車試駕|外觀內裝導覽|公路美景|POV Drive'
       description =
         '開車導覽家樂福、全聯、好市多等各式賣場停車場、室內停車場、機械式停車場，以及台灣各地景點開車動線，亦或是搭配輕鬆音樂一起徜徉在公路美景之中'
-      ogImg = ogImgVideoList.src
+      ogImg = 'https://pov.tw/ogimg-video-list.jpg'
       canonical = 'https://pov.tw/v'
 
       break
