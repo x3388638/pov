@@ -14,4 +14,6 @@ const WrappedMapSection = forwardRef<
   Omit<MapSectionProps, 'forwardedRef'>
 >((props, ref) => <MapSection {...props} forwardedRef={ref} />)
 
+WrappedMapSection.displayName = 'WrappedMapSection'
+
 export default WrappedMapSection

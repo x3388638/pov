@@ -40,77 +40,77 @@ export const genMetadata = (
   // FIXME
   return {}
 
-  let title, description, ogImg, canonical, noindex
+  // let title, description, ogImg, canonical, noindex
 
-  switch (page) {
-    case 'PhotoList': {
-      title = '全台拍車景點列表|解任務清單|美景地圖|停車場導覽'
-      description =
-        '搜集全台灣各地台北、台中、南投、高雄、宜蘭、花蓮、台東、澎湖等各地解任務拍車景點，分享美麗風景'
-      ogImg = ogImgPhotoList.src
-      canonical = 'https://pov.tw/p'
+  // switch (page) {
+  //   case 'PhotoList': {
+  //     title = '全台拍車景點列表|解任務清單|美景地圖|停車場導覽'
+  //     description =
+  //       '搜集全台灣各地台北、台中、南投、高雄、宜蘭、花蓮、台東、澎湖等各地解任務拍車景點，分享美麗風景'
+  //     ogImg = ogImgPhotoList.src
+  //     canonical = 'https://pov.tw/p'
 
-      break
-    }
+  //     break
+  //   }
 
-    case 'VideoList': {
-      title =
-        '第一人稱開車視角|地獄停車場|賣場停車場導覽|汽車試駕|外觀內裝導覽|公路美景|POV Drive'
-      description =
-        '開車導覽家樂福、全聯、好市多等各式賣場停車場、室內停車場、機械式停車場，以及台灣各地景點開車動線，亦或是搭配輕鬆音樂一起徜徉在公路美景之中'
-      ogImg = ogImgVideoList.src
-      canonical = 'https://pov.tw/v'
+  //   case 'VideoList': {
+  //     title =
+  //       '第一人稱開車視角|地獄停車場|賣場停車場導覽|汽車試駕|外觀內裝導覽|公路美景|POV Drive'
+  //     description =
+  //       '開車導覽家樂福、全聯、好市多等各式賣場停車場、室內停車場、機械式停車場，以及台灣各地景點開車動線，亦或是搭配輕鬆音樂一起徜徉在公路美景之中'
+  //     ogImg = ogImgVideoList.src
+  //     canonical = 'https://pov.tw/v'
 
-      break
-    }
+  //     break
+  //   }
 
-    case 'LocationDetail': {
-      if (id) {
-        if (opts?.locationName) {
-          title = `${opts.locationName}|拍車景點|停車場導覽|解任務|公路美景|第一人稱視角`
-        }
+  //   case 'LocationDetail': {
+  //     if (id) {
+  //       if (opts?.locationName) {
+  //         title = `${opts.locationName}|拍車景點|停車場導覽|解任務|公路美景|第一人稱視角`
+  //       }
 
-        canonical = `https://pov.tw/p/${id}`
-      }
+  //       canonical = `https://pov.tw/p/${id}`
+  //     }
 
-      break
-    }
+  //     break
+  //   }
 
-    case 'YoutubeRedirect': {
-      if (id) {
-        if (opts?.locationName) {
-          title = `前往 YouTube 觀看 ${opts.locationName} 影片`
-        }
+  //   case 'YoutubeRedirect': {
+  //     if (id) {
+  //       if (opts?.locationName) {
+  //         title = `前往 YouTube 觀看 ${opts.locationName} 影片`
+  //       }
 
-        if (opts?.youtubeId) {
-          ogImg = `https://img.youtube.com/vi/${opts.youtubeId}/maxresdefault.jpg`
-        }
+  //       if (opts?.youtubeId) {
+  //         ogImg = `https://img.youtube.com/vi/${opts.youtubeId}/maxresdefault.jpg`
+  //       }
 
-        canonical = `https://pov.tw/y/${id}`
-        noindex = true
-      }
+  //       canonical = `https://pov.tw/y/${id}`
+  //       noindex = true
+  //     }
 
-      break
-    }
-  }
+  //     break
+  //   }
+  // }
 
-  return {
-    ...DEFAULT_METADATA,
-    ...(title && { title }),
-    ...(description && { description }),
-    openGraph: {
-      ...DEFAULT_METADATA.openGraph,
-      ...(title && { title }),
-      ...(description && { description }),
-      images: {
-        ...DEFAULT_METADATA.openGraph.images,
-        ...(ogImg && { url: ogImg }),
-      },
-    },
-    alternates: {
-      ...DEFAULT_METADATA.alternates,
-      ...(canonical && { canonical }),
-    },
-    ...(noindex && { robots: { index: false } }),
-  }
+  // return {
+  //   ...DEFAULT_METADATA,
+  //   ...(title && { title }),
+  //   ...(description && { description }),
+  //   openGraph: {
+  //     ...DEFAULT_METADATA.openGraph,
+  //     ...(title && { title }),
+  //     ...(description && { description }),
+  //     images: {
+  //       ...DEFAULT_METADATA.openGraph.images,
+  //       ...(ogImg && { url: ogImg }),
+  //     },
+  //   },
+  //   alternates: {
+  //     ...DEFAULT_METADATA.alternates,
+  //     ...(canonical && { canonical }),
+  //   },
+  //   ...(noindex && { robots: { index: false } }),
+  // }
 }

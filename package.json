@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint './**/*.js' && echo \"✅ Lint passed\"",
-    "lint:fix": "eslint './**/*.js' --fix",
     "prettier:check": "prettier --check './**/*.{js,json,css}'",
     "prettier:write": "prettier --write './**/*.{js,json,css}'",
     "prepare": "husky install",
@@ -13,7 +11,8 @@
     "sitemap:update": "node ./sitemap.js",
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -32,12 +31,13 @@
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
     "eslint": "^8.44.0",
+    "eslint-config-next": "^14.1.0",
     "eslint-plugin-react": "^7.32.2",
     "gh-pages": "^6.1.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "2.8.8",
-    "typescript": "5.3.3"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
@@ -58,9 +58,6 @@
   "lint-staged": {
     "*.{js,json,css}": [
       "npm run prettier:check"
-    ],
-    "*.js": [
-      "npm run lint"
     ]
   }
 }
