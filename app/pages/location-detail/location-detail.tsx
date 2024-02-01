@@ -199,19 +199,24 @@ const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
               <FontAwesomeIcon icon={faMapLocationDot} color="#ff4949" />
               <h1>{targetLocation?.location.name}</h1>
             </LocationNameContainer>
-            <a
-              href={`https://www.google.com/maps/@${targetLocation?.location.lat},${targetLocation?.location.lng},20z`}
-              rel="noopener noreferrer"
-              target="_blank"
+            <div
               style={{
                 position: 'relative',
                 marginLeft: '60px',
-                fontSize: '12px',
-                color: '#000',
               }}
             >
-              在 Google Maps 上查看
-            </a>
+              <a
+                href={`https://www.google.com/maps/@${targetLocation?.location.lat},${targetLocation?.location.lng},20z`}
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{
+                  fontSize: '12px',
+                  color: '#000',
+                }}
+              >
+                在 Google Maps 上查看
+              </a>
+            </div>
           </Header>
           <MapPositionStyle>
             <div
