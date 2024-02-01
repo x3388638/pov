@@ -2,6 +2,9 @@
 
 A React (Next.js) app integrated with Contentful (headless CMS) collects car photography and POV driving videos to share the beauty of Taiwan.
 
+<img width="1336" alt="img" src="https://github.com/x3388638/pov/assets/8147952/3cc615b5-0ee3-4a77-95f3-5949b5cd100b">
+
+
 ## Dev note
 
 ### Env
