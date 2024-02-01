@@ -202,7 +202,7 @@ const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
 const ItemList: FC<ItemListProps> = ({ type }) => {
   const { locationList } = useAppContext()
   const router = useRouter()
-  const { title, itemListKey, containerMaxWidth, metaTitle } = useMemo(
+  const { title, itemListKey, containerMaxWidth } = useMemo(
     () => config[type],
     [type]
   )
