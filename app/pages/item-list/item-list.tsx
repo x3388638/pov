@@ -2,18 +2,21 @@
 
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import styled from 'styled-components'
 import { faPhotoFilm, faShuffle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LatLngTuple } from 'leaflet'
 
 import { useAppContext } from '@/providers/app-context'
 import { ItemType, LocationData } from '@/interfaces'
-import { LeafletMap } from '@/utils/leaflet'
 import Filter from './filter'
 import { ItemFilter } from './interfaces'
 import { PAGE_ITEM_COUNT, config } from './constants'
 import { filterItemList } from './utils'
-import MapSection from './map-section'
+const MapSection = dynamic(() => import('./map-section'), {
+  ssr: false,
+})
 
 const Container = styled.div<{ $maxWidth: string }>`
   box-sizing: border-box;
@@ -202,7 +205,7 @@ const InfiniteScrollTrigger: FC<InfiniteScrollTriggerProps> = ({
 const ItemList: FC<ItemListProps> = ({ type }) => {
   const { locationList } = useAppContext()
   const router = useRouter()
-  const { title, itemListKey, containerMaxWidth, metaTitle } = useMemo(
+  const { title, itemListKey, containerMaxWidth } = useMemo(
     () => config[type],
     [type]
   )
@@ -212,8 +215,8 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
   const [filter, setFilter] = useState<ItemFilter>()
   const [filteredItemList, setFilteredItemList] = useState<LocationData[]>([])
   const [revealedItemList, setRevealedItemList] = useState<LocationData[]>([])
-  const mapRef = useRef<LeafletMap>()
   const mouseEnterTimeoutRef = useRef<number>()
+  const [mapCenter, setMapCenter] = useState<LatLngTuple>()
 
   useEffect(() => {
     if (locationList.length) {
@@ -262,7 +265,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
     clearTimeout(mouseEnterTimeoutRef.current)
     mouseEnterTimeoutRef.current = window.setTimeout(() => {
       const { lat, lng } = location
-      mapRef.current?.map.flyTo([lat, lng], 16, { duration: 1 })
+      setMapCenter([lat, lng])
     }, 1500)
   }
 
@@ -321,7 +324,7 @@ const ItemList: FC<ItemListProps> = ({ type }) => {
           <MapSection
             locationList={filteredItemList}
             type={type}
-            ref={mapRef}
+            mapCenter={mapCenter}
           />
         </MapContainer>
         <div

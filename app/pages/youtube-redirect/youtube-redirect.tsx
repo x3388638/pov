@@ -49,7 +49,6 @@ const YoutubeRedirect: FC = () => {
       {youtubeId && (
         <div
           style={{
-            position: 'relative',
             flex: 1,
             display: 'flex',
             alignItems: 'center',
@@ -59,8 +58,14 @@ const YoutubeRedirect: FC = () => {
           <div style={{ fontSize: '24px', padding: '20px' }}>
             正在導向至 YouTube...
           </div>
-          <img src={coverImg} style={{ width: '100%', maxWidth: '800px' }} />
-          <Loading />
+          <div
+            style={{
+              position: 'relative',
+            }}
+          >
+            <img src={coverImg} style={{ width: '100%', maxWidth: '800px' }} />
+            <Loading />
+          </div>
         </div>
       )}
     </>

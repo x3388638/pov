@@ -74,6 +74,8 @@ export const genMetadata = (
       if (id) {
         if (opts?.locationName) {
           title = `前往 YouTube 觀看 ${opts.locationName} 影片`
+          description =
+            'YouTube 上的在地嚮導，用第一人稱視角帶你導覽各地景點行車路線、公路美景、停車場內部及進出動線'
         }
 
         if (opts?.youtubeId) {
