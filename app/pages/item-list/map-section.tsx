@@ -1,7 +1,8 @@
-import { FC, ForwardedRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import { renderToString } from 'react-dom/server'
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LatLngTuple } from 'leaflet'
 
 import { ItemType, LocationData } from '@/interfaces'
 import { LeafletMap } from '@/utils/leaflet'
@@ -9,17 +10,11 @@ import { LeafletMap } from '@/utils/leaflet'
 export interface MapSectionProps {
   locationList: LocationData[]
   type: ItemType
-  forwardedRef: ForwardedRef<LeafletMap | undefined>
+  mapCenter?: LatLngTuple
 }
 
-const MapSection: FC<MapSectionProps> = ({
-  locationList,
-  type,
-  forwardedRef,
-}) => {
+const MapSection: FC<MapSectionProps> = ({ locationList, type, mapCenter }) => {
   const mapRef = useRef<LeafletMap>()
-
-  useImperativeHandle(forwardedRef, () => mapRef.current, [])
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -38,6 +33,12 @@ const MapSection: FC<MapSectionProps> = ({
       })
     }
   }, [locationList])
+
+  useEffect(() => {
+    if (mapCenter && mapRef.current) {
+      mapRef.current.map.flyTo(mapCenter, 16, { duration: 1 })
+    }
+  }, [mapCenter])
 
   const setMarkers = (list: LocationData[]) => {
     if (mapRef.current) {
