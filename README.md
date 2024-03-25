@@ -4,7 +4,6 @@ A React (Next.js) app integrated with Contentful (headless CMS) collects car pho
 
 <img width="1336" alt="img" src="https://github.com/x3388638/pov/assets/8147952/3cc615b5-0ee3-4a77-95f3-5949b5cd100b">
 
-
 ## Dev note
 
 ### Env
@@ -26,6 +25,12 @@ npm run dev
 
 ```
 npm run build
+```
+
+run the built version:
+
+```
+npm start
 ```
 
 ### Lint

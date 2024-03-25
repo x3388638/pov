@@ -100,12 +100,14 @@ const Cover: FC = () => {
     >
       <CoverBackground />
       <CoverContainer>
-        <Link href="/">
-          <Header>
-            <span style={{ whiteSpace: 'nowrap' }}>Car Photography /</span>{' '}
-            <span style={{ whiteSpace: 'nowrap' }}>POV Driving Video</span>
-          </Header>
-        </Link>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Link href="/">
+            <Header>
+              <span style={{ whiteSpace: 'nowrap' }}>Car Photography /</span>{' '}
+              <span style={{ whiteSpace: 'nowrap' }}>POV Driving Video</span>
+            </Header>
+          </Link>
+        </div>
         <h2
           style={{
             display: 'flex',
