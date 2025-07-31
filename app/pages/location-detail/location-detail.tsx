@@ -146,7 +146,7 @@ const sortItemDate = (a: any, b: any) =>
   new Date(b.date).valueOf() - new Date(a.date).valueOf()
 
 const LocationDetail: FC<LocationDetailProps> = ({ type }) => {
-  const { locationId } = useParams()
+  const { locationId } = useParams() || {}
   const router = useRouter()
   const { locationList, locationPageTarget: itemId } = useAppContext()
   const [targetLocation, setTargetLocation] = useState<

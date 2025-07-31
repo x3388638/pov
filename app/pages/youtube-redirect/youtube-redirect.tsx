@@ -8,7 +8,7 @@ import { useAppContext } from '@/providers/app-context'
 import { getLocationAndYoutubeIdByRedirectId } from '@/utils/contentful'
 
 const YoutubeRedirect: FC = () => {
-  const { id = '' } = useParams()
+  const { id = '' } = useParams() || {}
   const { locationList } = useAppContext()
   const router = useRouter()
   const [youtubeId, setYoutubeId] = useState<string | null | undefined>(

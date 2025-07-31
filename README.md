@@ -45,6 +45,12 @@ npm run lint
 SPACE_ID={{SPACE ID}} ACCESS_TOKEN={{ACCESS TOKEN}} npm run contentful:fetch
 ```
 
+### Update sitemap
+
+```
+node sitemap.js
+```
+
 ### Deploy
 
 The website is hosted on [Vercel](https://vercel.com/)
