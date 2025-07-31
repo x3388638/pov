@@ -8,8 +8,8 @@ A React (Next.js) app integrated with Contentful (headless CMS) collects car pho
 
 ### Env
 
-node: v20.9.0  
-npm: v10.1.0
+node: v22.17.0  
+npm: v10.9.2
 
 ### Run locally
 
